@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>ФИА — Сеть дилеров</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #0d1b2a;
+            color: #a3dfff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0a1e2e;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #1477ff;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background-color: #1477ff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+        }
+
+        .back-button:hover {
+            background-color: #1a8aff;
+        }
+
+        h1 {
+            color: #14b8ff;
+            margin: 0;
+            font-size: 2em;
+        }
+
+        h2 {
+            color: #14b8ff;
+            font-size: 1.2em;
+            margin-top: 5px;
+        }
+
+        .section {
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #14b8ff;
+            border-left: 5px solid #14b8ff;
+            padding-left: 10px;
+            margin-top: 40px;
+        }
+
+        .dealer-card {
+            background-color: #122e3e;
+            border: 1px solid #1477ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            box-shadow: 0 0 10px #14b8ff44;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+
+        .dealer-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dealer-card h3 {
+            color: #14daff;
+            margin-top: 0;
+            animation: glitchText 2s infinite;
+        }
+
+        .location {
+            color: #88dfff;
+            font-style: italic;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .tag {
+            color: #777;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        .items ul {
+            list-style: square;
+            margin-top: 10px;
+            color: #ccc;
+        }
+
+        .contact {
+            display: inline-block;
+            background-color: #1477ff;
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-top: 10px;
+            font-weight: bold;
+            box-shadow: 0 0 8px #14b8ff;
+        }
+
+        .reviews {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #0d2033;
+            border-left: 3px solid #14b8ff;
+            font-size: 0.9em;
+            color: #99dfff;
+        }
+
+        .review .user {
+            color: #14daff;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #08141e;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8em;
+            color: #444;
+            border-top: 1px solid #0d2a3e;
+        }
+
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, #003366, #14b8ff, #003366);
+            margin: 40px 0;
+        }
+
+        /* Глитч-анимация для заголовков */
+        @keyframes glitchText {
+            0% { text-shadow: 0 0 5px #14b8ff; }
+            50% { text-shadow: 2px -1px 10px #14daff; }
+            100% { text-shadow: -2px 1px 10px #14b8ff; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Кнопка "Назад" -->
+    <header>
+        <button class="back-button" onclick="goBack()">← Назад</button>
+        <h1>ФИА — Сеть дилеров</h1>
+        <p style="color: #777; font-size: 0.9em;">Внутренняя база данных. Доступ только для агентов.</p>
+    </header>
+
+    <div class="section">
+        <div class="section-title">👨‍🔧 Дилеры и их ассортимент</div>
+
+        <!-- Дилер 1 -->
+        <div class="dealer-card">
+            <h3>Механик "Слом"</h3>
+            <p class="location">📍 Бар "Эмпатия", Саббер</p>
+            <p class="tag">Тип: Подпольный техно</p>
+            <div class="items">
+                <ul>
+                    <li>Серотонин-Бустер</li>
+                    <li>Тихий Ствол</li>
+                    <li>Тактическая Сирена</li>
+                    <li>Термальная Сканирующая Система</li>
+                </ul>
+            </div>
+            <div class="contact">🔒 Контакт: Слом (в баре после 22:00)</div>
+        </div>
+
+        <!-- Дилер 2 -->
+        <div class="dealer-card">
+            <h3>Королева Ствола</h3>
+            <p class="location">📍 База "Красная Сеть", Восточный Найт-Сити</p>
+            <p class="tag">Тип: Оружейный дилер</p>
+            <div class="items">
+                <ul>
+                    <li>Турельная Система</li>
+                    <li>Подствольный Гранатомёт</li>
+                    <li>Слепой Прицел</li>
+                    <li>Система Подсветки</li>
+                </ul>
+            </div>
+            <div class="contact">🔒 Контакт: Требуется код — 714-LOX</div>
+        </div>
+
+        <!-- Дилер 3 -->
+        <div class="dealer-card">
+            <h3>Техно-Микс</h3>
+            <p class="location">📍 Саббер, район Камень</p>
+            <p class="tag">Тип: Подпольный технодок</p>
+            <div class="items">
+                <ul>
+                    <li>Сердце Охотника</li>
+                    <li>Голографический Диверсант</li>
+                    <li>Система Захвата</li>
+                    <li>Магнитный Выстрел</li>
+                </ul>
+            </div>
+            <div class="contact">🔒 Контакт: По запросу у "Тёмного Клыка"</div>
+        </div>
+
+        <!-- Дилер 4 -->
+        <div class="dealer-card">
+            <h3>Горячий Пак</h3>
+            <p class="location">📍 Голливудский Сектор</p>
+            <p class="tag">Тип: Бывший солдат</p>
+            <div class="items">
+                <ul>
+                    <li>Контроль Отдачи</li>
+                    <li>Мини-Турель</li>
+                    <li>Миномёт "Молот"</li>
+                    <li>Шоковая Вилка</li>
+                </ul>
+            </div>
+            <div class="contact">🔒 Контакт: В баре "Бойня", код — "Горячий"</div>
+        </div>
+
+        <!-- Дилер 5 -->
+        <div class="dealer-card">
+            <h3>Дрон-Следопыт</h3>
+            <p class="location">📍 Воздушный дрон-порт, Северный Найт-Сити</p>
+            <p class="tag">Тип: Дрон-торговец</p>
+            <div class="items">
+                <ul>
+                    <li>Мини-Дрон</li>
+                    <li>Голографический Диверсант</li>
+                    <li>Система Слепка</li>
+                    <li>Термальная Сканирующая Система</li>
+                </ul>
+            </div>
+            <div class="contact">🔒 Контакт: Через дрон-сеть, код — 404-REDACTED</div>
+        </div>
+
+        <!-- Дилер 6 -->
+        <div class="dealer-card">
+            <h3>Крюк</h3>
+            <p class="location">📍 Трущобы, склады</p>
+            <p class="tag">Тип: Бывший охотник за головами</p>
+            <div class="items">
+                <ul>
+                    <li>Крюк-Ловушка</li>
+                    <li>Магнитный Захват</li>
+                    <li>Тактическая Сирена</li>
+                    <li>Тихий Сброс</li>
+                </ul>
+            </div>
+            <div class="contact">🔒 Контакт: Через "Старую Сеть"</div>
+        </div>
+
+        <!-- Дилер 7 -->
+        <div class="dealer-card">
+            <h3>Тихий Слом</h3>
+            <p class="location">📍 Виртуальная сеть, Нетрекс</p>
+            <p class="tag">Тип: Хакер-торговец</p>
+            <div class="items">
+                <ul>
+                    <li>Тактическая Сирена</li>
+                    <li>Система Слепка</li>
+                    <li>Термальная Сканирующая Система</li>
+                    <li>Серотонин-Бустер</li>
+                </ul>
+            </div>
+            <div class="contact">🔒 Контакт: Нужен ключ от "Тени"</div>
+        </div>
+
+        <!-- Дилер 8 -->
+        <div class="dealer-card">
+            <h3>Морг</h3>
+            <p class="location">📍 Старый Морг, Нетрекс</p>
+            <p class="tag">Тип: Био-торговец</p>
+            <div class="items">
+                <ul>
+                    <li>Серотонин-Бустер</li>
+                    <li>Эмпатин</li>
+                    <li>Слепой Сброс</li>
+                    <li>Капля Памяти</li>
+                </ul>
+            </div>
+            <div class="contact">🔒 Контакт: Спроси у мёртвых</div>
+        </div>
+
+        <!-- Дилер 9 -->
+        <div class="dealer-card">
+            <h3>Тихий Глаз</h3>
+            <p class="location">📍 Саббер, старая телевышка</p>
+            <p class="tag">Тип: Снайпер-дилер</p>
+            <div class="items">
+                <ul>
+                    <li>Слепой Прицел</li>
+                    <li>Система Подсветки</li>
+                    <li>Сердце Охотника</li>
+                    <li>Турельная Система</li>
+                </ul>
+            </div>
+            <div class="contact">🔒 Контакт: Нужен опознавательный знак</div>
+        </div>
+
+        <!-- Дилер 10 -->
+        <div class="dealer-card">
+            <h3>Кровавый Микс</h3>
+            <p class="location">📍 Сектор 11, бывший военный арсенал</p>
+            <p class="tag">Тип: Военный черный рынок</p>
+            <div class="items">
+                <ul>
+                    <li>Подствольный Гранатомёт</li>
+                    <li>Мини-Турель</li>
+                    <li>Термальный Ударник</li>
+                    <li>Контроль Отдачи</li>
+                </ul>
+            </div>
+            <div class="contact">🔒 Контакт: Связь через "Глаз"</div>
+        </div>
+
+        <!-- Дилер 11 -->
+        <div class="dealer-card">
+            <h3>Глаза-Миксы</h3>
+            <p class="location">📍 Саббер, бывшая лаборатория</p>
+            <p class="tag">Тип: Психо-торговец</p>
+            <div class="items">
+                <ul>
+                    <li>Слепой Сброс</li>
+                    <li>Тактическая Сирена</li>
+                    <li>Термальная Сканирующая Система</li>
+                    <li>Серотонин-Бустер</li>
+                </ul>
+            </div>
+            <div class="contact">🔒 Контакт: Воспоминание о детстве</div>
+        </div>
+
+        <!-- Дилер 12 -->
+        <div class="dealer-card">
+            <h3>Ночной Глаз</h3>
+            <p class="location">📍 Нетрекс, заброшенный телепорт</p>
+            <p class="tag">Тип: Скрытый дилер</p>
+            <div class="items">
+                <ul>
+                    <li>Слепой Прицел</li>
+                    <li>Тактическая Сирена</li>
+                    <li>Система Слепка</li>
+                    <li>Тихий Сброс</li>
+                </ul>
+            </div>
+            <div class="contact">🔒 Контакт: Только по зашифрованному каналу</div>
+        </div>
+
+        <!-- Дилер 13 -->
+        <div class="dealer-card">
+            <h3>Барни</h3>
+            <p class="location">📍 Неизвестно</p>
+            <p class="tag">Тип: Скрытый дилер</p>
+            <div class="items">
+                <ul>
+                    <li>Иммуноблокаторы</li>
+                </ul>
+            </div>
+            <div class="contact">🔒 Контакт: По запросу</div>
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2025 | ФИА | Внутренняя база данных | Доступ только для сотрудников
+    </footer>
+
+    <script>
+        // Появление карточек при скролле
+        const cards = document.querySelectorAll('.dealer-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+
+        // Кнопка "Назад"
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+</body>
+</html>
