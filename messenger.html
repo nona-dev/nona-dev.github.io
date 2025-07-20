@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>NIGHT-CITY MESSENGER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #0a0f1a;
+            color: #00ffff;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Левая колонка с контактами */
+        .contacts {
+            width: 30%;
+            background-color: #001122;
+            padding: 20px;
+            border-right: 2px solid #0055aa;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+
+        .contacts h3 {
+            color: #00ffff;
+            margin-top: 0;
+            font-size: 1.2em;
+            border-bottom: 1px solid #0055aa;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .contacts a {
+            display: block;
+            color: #00ffff;
+            text-decoration: none;
+            padding: 10px;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .contacts a:hover {
+            background-color: #002233;
+            border-left: 3px solid #00ffff;
+        }
+
+        /* Основной чат */
+        .main {
+            margin-left: 32%;
+            width: 68%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #001122;
+            padding: 20px;
+            border-bottom: 2px solid #0055aa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            color: #ff0033;
+            font-weight: bold;
+        }
+
+        .glitch {
+            position: relative;
+            color: #00ffff;
+            font-weight: bold;
+            font-size: 2em;
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 0 0 5px #00ffff; }
+            50% { text-shadow: 2px -1px 10px #ff0033; }
+            100% { text-shadow: -2px 1px 10px #00ffcc; }
+        }
+
+        /* Чат */
+        .chat-box {
+            flex: 1;
+            background-color: #0f0f0f;
+            border: 1px solid #003366;
+            padding: 15px;
+            overflow-y: auto;
+            box-shadow: 0 0 10px #00ffff44;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            background-color: #1a1a1a;
+            border-left: 3px solid #00ffff;
+            font-size: 0.9em;
+            word-wrap: break-word;
+        }
+
+        .message.you {
+            background-color: #002233;
+            border-left-color: #ff0033;
+            color: #00ffaa;
+            align-self: flex-end;
+        }
+
+        .message.from {
+            background-color: #111;
+            border-left-color: #00ffff;
+            color: #00ffff;
+            align-self: flex-start;
+        }
+
+        /* Форма отправки */
+        .chat-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-form select,
+        .chat-form textarea {
+            background-color: #111;
+            color: #00ffff;
+            border: 1px solid #003366;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9em;
+        }
+
+        .chat-form button {
+            background-color: #003366;
+            color: #00ffff;
+            border: none;
+            padding: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .chat-form button:hover {
+            background-color: #004488;
+        }
+
+        /* Футер */
+        footer {
+            background-color: #001122;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #003366;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        .footer-text {
+            color: #00ffff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Список контактов -->
+    <div class="contacts">
+        <h3>Контакты</h3>
+        <a href="#" onclick="setContact('Слом')">Слом</a>
+        <a href="#" onclick="setContact('Крюк')">Крюк</a>
+        <a href="#" onclick="setContact('Тихий Глаз')">Тихий Глаз</a>
+        <a href="#" onclick="setContact('Морг')">Морг</a>
+        <a href="#" onclick="setContact('Горячий Пак')">Горячий Пак</a>
+    </div>
+
+    <!-- Основная часть чата -->
+    <div class="main">
+        <header>
+            <div class="logo">
+                <span class="glitch">NIGHT-CITY MESSENGER</span>
+            </div>
+            <div class="header-right">
+                <span>Сеть: 🟢 Активна</span>
+            </div>
+        </header>
+
+        <div class="chat-box" id="chat-box">
+            <!-- Сообщения будут загружены сюда -->
+        </div>
+
+        <form class="chat-form" id="message-form">
+            <input type="hidden" id="selected-contact" value="">
+            <textarea id="message" rows="3" placeholder="Введите сообщение..." required></textarea>
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+
+    <footer>
+        &copy; 2025 | NIGHT-CITY MESSENGER | Все сообщения шифруются | <span class="footer-text">Не доверяй никому</span>
+    </footer>
+
+    <script>
+        const chatBox = document.getElementById("chat-box");
+        const contactInput = document.getElementById("selected-contact");
+        const messageInput = document.getElementById("message");
+        const form = document.getElementById("message-form");
+
+        let currentContact = "";
+
+        function setContact(contact) {
+            event.preventDefault();
+            currentContact = contact;
+            document.querySelector('.header-right span').textContent = `Выбран контакт: ${contact}`;
+        }
+
+        // Загрузка сообщений
+        async function loadMessages() {
+            try {
+                const response = await fetch('messages.json?nocache=' + new Date().getTime());
+                const messages = await response.json();
+
+                chatBox.innerHTML = "";
+                const filtered = messages.filter(m => m.contact === currentContact || m.user === currentContact);
+
+                filtered.forEach(msg => {
+                    const div = document.createElement("div");
+                    div.className = "message " + (msg.user === "Вы" ? "you" : "from");
+                    div.innerHTML = `<strong>${msg.user}</strong> <small>${msg.time}</small><br>${msg.text}`;
+                    chatBox.appendChild(div);
+                });
+
+                chatBox.scrollTop = chatBox.scrollHeight;
+            } catch (e) {
+                chatBox.innerHTML = "<p style='color: #888;'>⚠️ Не удалось загрузить сообщения</p>";
+            }
+        }
+
+        // Отправка сообщения
+        async function sendMessage(event) {
+            event.preventDefault();
+            const text = messageInput.value.trim();
+
+            if (!currentContact || !text) return;
+
+            const newMessage = {
+                user: "Вы",
+                contact: currentContact,
+                text: text,
+                time: new Date().toLocaleTimeString(),
+                type: "player"
+            };
+
+            try {
+                const response = await fetch('messages.json');
+                const messages = await response.json();
+
+                messages.push(newMessage);
+
+                // Тут мы имитируем "отправку" (на GitHub нужно обновлять вручную)
+                alert("Сообщение добавлено в messages.json. Залей обновлённый файл на GitHub.");
+                messageInput.value = "";
+                loadMessages();
+            } catch (e) {
+                console.error("Не удалось отправить сообщение");
+            }
+        }
+
+        form.addEventListener("submit", sendMessage);
+
+        // Обновление каждые 10 секунд
+        window.onload = () => {
+            setInterval(() => {
+                if (currentContact) {
+                    loadMessages();
+                }
+            }, 10000);
+        };
+    </script>
+
+</body>
+</html>
