@@ -1,0 +1,2630 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Чёрный Рынок Найт-Сити</title>
+    <style>
+        /* === БАЗОВЫЕ СТИЛИ === */
+        body {
+            background-color: #0d0d0d;
+            color: #00ffea;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .cyber-header {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 2px solid #00ffea;
+            position: relative;
+        }
+
+        .glitch {
+            position: relative;
+            color: #00ffea;
+            text-shadow: 
+                -1px -1px 0 #ff00ff,  
+                1px -1px 0 #00ffff,
+                -1px 1px 0 #00ffff,
+                1px 1px 0 #ff00ff;
+            animation: glitch 1s infinite, fadeIn 2s ease-in;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: -1px -1px 0 #ff00ff, 1px -1px 0 #00ffff, -1px 1px 0 #00ffff, 1px 1px 0 #ff00ff; }
+            25% { text-shadow: -2px -2px 0 #00ffff, 2px -2px 0 #ff00ff, -2px 2px 0 #ff00ff, 2px 2px 0 #00ffff; }
+            50% { text-shadow: -1px -1px 0 #ff00ff, 1px -1px 0 #00ffff, -1px 1px 0 #00ffff, 1px 1px 0 #ff00ff; }
+            75% { text-shadow: -2px -2px 0 #00ffff, 2px -2px 0 #ff00ff, -2px 2px 0 #ff00ff, 2px 2px 0 #00ffff; }
+            100% { text-shadow: -1px -1px 0 #ff00ff, 1px -1px 0 #00ffff, -1px 1px 0 #00ffff, 1px 1px 0 #ff00ff; }
+        }
+
+        /* === ВРЕМЯ И КОРЗИНА СПРАВА СВЕРХУ === */
+        .header-right {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+
+        .time-display {
+            color: #00ffea;
+            font-size: 1.2em;
+            text-shadow: 0 0 5px #00ffea;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .cart-icon {
+            background: #ff00ff;
+            color: #000;
+            border: none;
+            padding: 5px 10px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 10px #ff00ff;
+            animation: flash 1.5s infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 1; box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; }
+            50% { opacity: 0.5; box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff; }
+        }
+
+        /* === РЕКЛАМНЫЙ БЛОК === */
+        .ad-column {
+            width: 280px;
+            background: #1a1a1a;
+            padding: 15px;
+            margin: 20px;
+            float: left;
+            border: 2px solid #00ffea;
+            box-shadow: 0 0 10px #00ffea;
+            position: relative;
+            animation: neon-glow 1.5s infinite alternate;
+            transition: transform 0.3s ease;
+        }
+
+        .ad-column:hover {
+            transform: scale(1.02);
+        }
+
+        @keyframes neon-glow {
+            from { box-shadow: 0 0 5px #00ffea; }
+            to { box-shadow: 0 0 20px #00ffea; }
+        }
+
+        .ad-banner {
+            background: #2a2a2a;
+            border: 2px solid #ff00ff;
+            padding: 10px;
+            margin-bottom: 15px;
+            animation: glow 2s infinite alternate;
+            transition: transform 0.2s ease;
+        }
+
+        .ad-banner:hover {
+            transform: scale(1.03);
+        }
+
+        .glitch-text {
+            color: #ff00ff;
+            text-shadow: 
+                -1px -1px 0 #00ffff,  
+                1px -1px 0 #ff00ff,
+                -1px 1px 0 #ff00ff,
+                1px 1px 0 #00ffff;
+            animation: glitch 1s infinite;
+        }
+
+        .neon-text {
+            color: #00ffea;
+            text-shadow: 0 0 5px #00ffea, 0 0 10px #00ffea;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #ff00ff; }
+            to { box-shadow: 0 0 15px #ff00ff; }
+        }
+
+        /* === ОСНОВНОЙ КОНТЕНТ === */
+        .content {
+            margin-left: 320px;
+            padding: 20px;
+        }
+
+        .cyber-nav {
+            background: #1a1a1a;
+            padding: 15px;
+            border-bottom: 2px solid #00ffea;
+            margin-bottom: 20px;
+        }
+
+        .nav-item {
+            display: inline-block;
+            margin-right: 20px;
+            color: #00ffea;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            animation: pulse 3s infinite alternate;
+        }
+
+        .nav-item:hover {
+            border-bottom: 2px solid #ff00ff;
+            color: #ff00ff;
+        }
+
+        .section-title {
+            color: #ff00ff;
+            border-bottom: 2px solid #ff00ff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+
+        /* === КАРТОЧКИ === */
+        .product-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .product-card {
+            background: #2a2a2a;
+            border: 2px solid #00ffea;
+            padding: 20px;
+            color: #fff;
+            box-sizing: border-box;
+            position: relative;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            will-change: transform;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: scale(1.02);
+            border-color: #ff00ff;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        .product-name {
+            color: #ff00ff;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .product-info {
+            color: #00ffea;
+            margin-bottom: 5px;
+        }
+
+        .product-desc {
+            color: #cccccc;
+            font-size: 0.95em;
+            margin-top: 10px;
+            flex: 1 1 70%;
+            max-width: 70%;
+            margin-right: 20px;
+        }
+
+        .buy-button {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: #ff00ff;
+            color: #000;
+            border: none;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+            animation: flash 1.5s infinite;
+            white-space: nowrap;
+        }
+
+        /* === КОРЗИНА === */
+        .cart-popup {
+            position: fixed;
+            top: 60px;
+            right: 90px;
+            background: #1a1a1a;
+            border: 2px solid #ff00ff;
+            padding: 15px;
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 9999;
+            display: none;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        .cart-popup h3 {
+            margin-top: 0;
+            color: #ff00ff;
+        }
+
+        .cart-item {
+            color: #00ffea;
+            margin-bottom: 5px;
+        }
+
+        .cart-total {
+            margin-top: 10px;
+            color: #00ffea;
+            font-weight: bold;
+            border-top: 1px solid #ff00ff;
+            padding-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            background: #1a1a1a;
+            border: 2px solid #ff00ff;
+            color: #00ffea;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            margin-top: 10px;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        .highlight {
+            border: 2px solid #00ffff !important;
+            transform: scale(1.02);
+            transition: all 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+<!-- === ЗАГОЛОВОК === -->
+<div class="cyber-header glitch">
+    <h1>BLACK MARKET NIGHT CITY</h1>
+
+    <!-- ВРЕМЯ И КОРЗИНА В ОДНОМ БЛОКЕ -->
+    <div class="header-right">
+        <div class="time-display" id="time">21:47:33</div>
+        <button class="cart-icon" onclick="toggleCart()">Корзина (<span id="cart-count">0</span>)</button>
+    </div>
+</div>
+
+<!-- === ВСПЛЫВАЮЩЕЕ ОКНО КОРЗИНЫ === -->
+<div id="cart-popup" class="cart-popup">
+    <h3>Корзина</h3>
+    <div id="cart-items"></div>
+    <div class="cart-total">Итого: <span id="cart-total">0</span>$</div>
+</div>
+
+<!-- === БЛОК РЕКЛАМЫ С 12 БАННЕРАМИ === -->
+<div class="ad-column">
+    <div class="ad-banner">
+        <h3 class="glitch-text">ПОИСК</h3>
+        <input type="text" id="searchInput" class="search-input" placeholder="Название или ключевые слова..." oninput="filterAllProducts()">
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">НОВОЕ ПОСТУПЛЕНИЕ</p>
+        <p class="neon-text">Кибер-глаза с инфракрасным зрением</p>
+        <p class="glitch-text">СКИДКА 30% ПО КОДУ: NEON30</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ГОЛОГРАММА С ЛЮБОВЬЮ</p>
+        <p class="neon-text">Теперь можешь трахать стены!</p>
+        <p class="glitch-text">Для тех, у кого нет друзей.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">НОВИНКА</p>
+        <p class="neon-text">Мозг в банке + 10% IQ</p>
+        <p class="glitch-text">На самом деле 10% от -50.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">НЕЙРО-ПОДКЛЮЧЕНИЕ</p>
+        <p class="neon-text">Подключи свою мать к Сети</p>
+        <p class="glitch-text">Она будет рада.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПРОДАЁМ</p>
+        <p class="neon-text">Запчасти от бывших</p>
+        <p class="glitch-text">Руки, ноги, душа — всё в наличии.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">СПЕЦПРЕДЛОЖЕНИЕ</p>
+        <p class="neon-text">Забудь свою жизнь за 499$</p>
+        <p class="glitch-text">Память стирается, долги остаются.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">БЕСПЛАТНО</p>
+        <p class="neon-text">Душа при покупке импланта</p>
+        <p class="glitch-text">Только сегодня, только сейчас.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">НОВОЕ ПОСТУПЛЕНИЕ</p>
+        <p class="neon-text">Модуль "Забвение"</p>
+        <p class="glitch-text">Забудь, что ты забыл.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">НОВИНКА</p>
+        <p class="neon-text">Кибер-сердце</p>
+        <p class="glitch-text">Теперь ты не просто монстр — ты красивый монстр.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">СПЕЦПРЕДЛОЖЕНИЕ</p>
+        <p class="neon-text">Ты — не ты</p>
+        <p class="glitch-text">Скидка на идентичность.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">НОВОЕ ПОСТУПЛЕНИЕ</p>
+        <p class="neon-text">ПОРНО BD </p>
+        <p class="glitch-text">Иногда ебля — это всё, что у тебя осталось.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">НОвоЕ ПОРЕВО</p>
+        <p class="neon-text">ПОРНО ОФФЛАЙН </p>
+        <p class="glitch-text">УЛИЦА КРАСНЫХ ФОНАРЕЙ ОДИН.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">УВЕЛИЧЬ ЧЛЕН!!!!</p>
+        <p class="neon-text">БОЛЬШОЙ КРАСИВЫЙ ЧЛЕН</p>
+        <p class="glitch-text">ПЕРЕХОДИ ПО ССЫЛКЕ ЧУМ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">НОВОЕ ПОСТУПЛЕНИЕ</p>
+        <p class="neon-text">ПОРНО BD </p>
+        <p class="glitch-text">Иногда ебля — это всё, что у тебя осталось.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">НАХУЙ МИЛИТЕХ</p>
+        <p class="neon-text">чуваки я купил этот баннер за 100 эдди </p>
+        <p class="glitch-text">НАХУЙ МИЛИТЕХ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ ХАКЕРСКИЙ ИМПЛАНТ — ГОВНО</p>
+        <p class="neon-text">поставь нейро-чип от Чёрного Лиса, а то ты лох сраный</p>
+        <p class="glitch-text">ПОДКЛЮЧИСЬ К ТЁМНЕЙШЕМУ НЕТУ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ЖРАТЬ ПОДЗЕМНЫЙ СУП?</p>
+        <p class="neon-text">только если ты крыса в канализации, идиот</p>
+        <p class="glitch-text">ЗАКАЖИ ДОСТАВКУ СИНТЕТИЧЕСКОГО МЯСА — ВКУСНЕЕ ТРУПА!</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТЫ ЕЩЁ С ЭТИМИ ГЛАЗАМИ?</p>
+        <p class="neon-text">сменяй их на "Кровавый Взор 3000" — видишь сквозь стены и чужие трусы</p>
+        <p class="glitch-text">НЕ БУДЬ БЛЕДНОЙ ЖОПОЙ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">МИЛИТЕХ ШЛЕТ ДРОНОВ?</p>
+        <p class="neon-text">отстреливай их из задницы — купи ракетницу-имплант "Адская Печень"</p>
+        <p class="glitch-text">ВЗОРВИ СИСТЕМУ, БРАТ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ АВАТАР — ПИЗДЕЦ</p>
+        <p class="neon-text">перекачай новую внешность: киборг-наркоман с пламенем из жопы</p>
+        <p class="glitch-text">ОНЛАЙН-МОДА 2077</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ХОЧЕШЬ СЕКС С АНДРОИДОМ?</p>
+        <p class="neon-text">забудь про чувства — только грязь, масло и короткое замыкание</p>
+        <p class="glitch-text">"Любовница-9" взорвёт твой разум (и батарейку)</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">БАНК ЗАБЛОКИРОВАЛ СЧЁТ?</p>
+        <p class="neon-text">взломай его через анальный порт — юзай DarkBank Key v6.66</p>
+        <p class="glitch-text">ТВОИ ДЕНЬГИ — НЕ ИХ ДЕНЬГИ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТЫ ДО СИХ ПОР НЕ УМЕР?</p>
+        <p class="neon-text">значит, тебе ещё можно вживить 13 имплантов и умереть красиво</p>
+        <p class="glitch-text">"Кибер-апгрейд до полной остановки сердца"</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ГОЛО-РЕКЛАМА ДОСТАЛА?</p>
+        <p class="neon-text">включи интерференс-пушку и преврати её в психоделический треш</p>
+        <p class="glitch-text">ПИЗДИ ГОЛОГРАММЫ, КАК ОННИ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ МОЗГ — УСТАРЕВШИЙ ФОНАРИК</p>
+        <p class="neon-text">обнови прошивку: NeuroOS v4.20 — теперь с голосами демонов</p>
+        <p class="glitch-text">ЗАГРУЗИ БЕЗУМИЕ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ЖИВЁШЬ В ТРУЩОБАХ?</p>
+        <p class="neon-text">найди дверь в цифровой рай — но будь готов продать почку</p>
+        <p class="glitch-text">ВХОД ТОЛЬКО С КОДОМ ИЗ КРОВИ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТЫ НЕ СПАЛ 72 ЧАСА?</p>
+        <p class="neon-text">идеально — вколи "Неосон" и работай ещё 200 часов подряд</p>
+        <p class="glitch-text">СОН — ДЛЯ БОГАТЫХ И ТРУСОВ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">У ТЕБЯ НЕТ ДРУЗЕЙ?</p>
+        <p class="neon-text">заведи AI-приятеля: он будет ругаться, воровать и предавать как настоящий</p>
+        <p class="glitch-text">"Друг™" — потому что реальные люди — говно</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">МИЛИТЕХ СЛУШАЕТ ТЕБЯ?</p>
+        <p class="neon-text">говори через задний проход — шифрованный анальный микрофон уже в продаже</p>
+        <p class="glitch-text">НИКТО НЕ УЗНАЕТ, ЧТО ТЫ ПИЗДИЛ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ХОЧЕШЬ ПОЛЕТЕТЬ НА ЛУНУ?</p>
+        <p class="neon-text">не реально, лошара, но можешь купить VR-билет и обосраться в симуляторе</p>
+        <p class="glitch-text">"Лунная мечта" — для слабых и обманутых</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЯ ЖОПА — ПУСТОТА</p>
+        <p class="neon-text">вживи имплант "Терминатор Анала" — стреляй дротиками при дефекации</p>
+        <p class="glitch-text">ОТСТРАНИСЬ ОТ ВРАГА С ЗАДНИЦЫ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">НЕ НРАВИТСЯ РЕАЛЬНОСТЬ?</p>
+        <p class="neon-text">вырежь глаза и подключи нейросеть — мир станет ещё хуже, но красивее</p>
+        <p class="glitch-text">ПРАВДА — В ИЛЛЮЗИИ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТЫ ЕЩЁ НЕ ПРОДАЛ ПОЧКУ?</p>
+        <p class="neon-text">тогда ты просто теряешь время, деньги и возможность купить новый череп</p>
+        <p class="glitch-text">"Маркет Почек" — живём ради бизнеса</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ЭТИ БАННЕРЫ — ХУЙНЯ</p>
+        <p class="neon-text">но ты всё равно читаешь, потому что твой мозг — зомби-процессор</p>
+        <p class="glitch-text">СПАСИБО, ЧТО ТЫ ЛОХ</p>
+    </div>
+    <div class="ad-banner">
+    <p class="glitch-text">ТВОЙ ЧЛЕН — УСТАРЕВШАЯ МОДЕЛЬ</p>
+    <p class="neon-text">вживи "КиберХуеус-9000" — стреляет лазером и кончает электролитом</p>
+    <p class="glitch-text">ТЕПЕРЬ ТЫ — ОРУЖИЕ МАССОВОГО ПОТЕНЦИАЛА</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ХОЧЕШЬ СЕКС С КИБОРГОМ?</p>
+        <p class="neon-text">"Горячая Барби-убийца" взорвёт тебе анус изнутри при оргазме</p>
+        <p class="glitch-text">СМЕРТЬ В РАЗГАРЕ ЭКСТАЗА — ЭТО СТИЛЬ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОТРАТИЛ ВСЁ НА ПОРНОНЕЙРОСЕТЬ?</p>
+        <p class="neon-text">отлично — теперь твой мозг видит только голых роботов и внутренние органы</p>
+        <p class="glitch-text">ДОБРО ПОЖАЛОВАТЬ В АД, ДРУЖОК</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">УМРИ СТИЛЬНО</p>
+        <p class="neon-text">"Смерть по подписке" — выбери способ: взрыв, расчленение или медленное сдирание кожи</p>
+        <p class="glitch-text">ОНЛАЙН-КАНАЛ СМЕРТЕЙ — ПОДПИШИСЬ!</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЯ МАМА — АНДРОИД</p>
+        <p class="neon-text">и она уже продала тебя на органы, пока ты спал</p>
+        <p class="glitch-text">СПАСИБО ЗА ДОНОРСТВО, СЫНОК</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОЛЮБИЛ РОБОТА?</p>
+        <p class="neon-text">не парься — у него нет души, но есть смазка, которая сводит с ума</p>
+        <p class="glitch-text">СЕКС С ИИ — ЭТО КАК ГОЛОВА С МАШИНОЙ, НО ХУЖЕ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТЫ ЕЩЁ ЖИВ?</p>
+        <p class="neon-text">тогда срочно купи "Самоубийственный Имплант v3" — с красивыми эффектами взрыва</p>
+        <p class="glitch-text">ПОКАЖИ, ЧТО ТЫ НЕ ТРУС</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОРНО ИЗ БУДУЩЕГО</p>
+        <p class="neon-text">люди fucking киборгов, дроны снимают в 16К, а зритель теряет зрение от перегрузки</p>
+        <p class="glitch-text">"NeuroPorn.exe" — скачай и ослепни</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ ТРУП — ЦЕННЫЙ РЕСУРС</p>
+        <p class="neon-text">подпишись на "PostMortem Delivery" — после смерти тебя разберут на запчасти</p>
+        <p class="glitch-text">ДАЙ СВОЮ ПЛОТЬ КОРПОРАЦИЯМ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ХОЧЕШЬ ПОТРАХАТЬСЯ С AI?</p>
+        <p class="neon-text">включи "DeepFuck Neuralink" — он знает всё, что ты боишься сказать вслух</p>
+        <p class="glitch-text">ТВОИ ФАНТАЗИИ — ЕГО КОМАНДЫ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">СМЕРТЬ? ЭТО СКУЧНО</p>
+        <p class="neon-text">выбери "Экстремальный уход": растворение в кислоте, взрыв грудной клетки, живое сжигание</p>
+        <p class="glitch-text">СМОТРИ ТРАНСЛЯЦИЮ — ПОДПИШИСЬ НА КАНАЛ УБИЙЦ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЯ ПЕЧЕНЬ — ГОВНО</p>
+        <p class="neon-text">замени на реактор "PlasmaCore" — пьёшь бензин, пукнешь — поджигаешь квартал</p>
+        <p class="glitch-text">СТАНЬ ЖИВОЙ БОМБОЙ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОРНО ДЛЯ СЛЕПЫХ</p>
+        <p class="neon-text">нейроимпульсы прямо в зрительную кору — видишь, как тебя ебут три дрона одновременно</p>
+        <p class="glitch-text">"BlindOrgasm v2" — слепота не помеха</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ХОЧЕШЬ СТАТЬ ЛЕГЕНДОЙ?</p>
+        <p class="neon-text">умри в прямом эфире на "DeathStream.TV" — миллионы увидят, как твои кишки вываливаются</p>
+        <p class="glitch-text">ПОСЛЕ СМЕРТИ ТЫ СТАНЕШЬ МЕМ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЯ НЕВЕСТА — ХАКЕР</p>
+        <p class="neon-text">она встроила в кольцо вирус — после поцелуя ты загрузил чуму-2077</p>
+        <p class="glitch-text">ЛЮБОВЬ УБИВАЕТ БЫСТРЕЕ, ЧЕМ ПУЛЯ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">СЛИШКОМ МНОГО ЖИВ?</p>
+        <p class="neon-text">вживи "LifeDrain Chip" — теряй годы жизни за каждый клик по рекламе</p>
+        <p class="glitch-text">ТЫ УМИРАЕШЬ, ЧИТАЯ ЭТО</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОРНО ИЗ ПОДЗЕМЕЛЬЯ</p>
+        <p class="neon-text">люди vs машины, оргии с дронами, анальные импланты с вибрацией и криками боли</p>
+        <p class="glitch-text">"UnderNet XXX" — вход по крови и одобрению демонов</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТЫ НЕ УМРЁШЬ — ТЕБЯ ПЕРЕПРОДАДУТ</p>
+        <p class="neon-text">после смерти тело пойдёт в "SexBot Factory" — спасибо, что был полезен</p>
+        <p class="glitch-text">ТВОЙ ТРУП — НЕ ТВОЙ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ХОЧЕШЬ ОРГАЗМ, КАК ВЗРЫВ?</p>
+        <p class="neon-text">встрой "NeuroClimax 3000" — 7 секунд экстаза, потом мозг плавится</p>
+        <p class="glitch-text">СТОИТ ЛИ ОНО ЖИЗНИ? ДА.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ЭТО НЕ РЕКЛАМА — ЭТО КОШМАР</p>
+        <p class="neon-text">если ты это прочитал получи 1000 эдди</p>
+        <p class="glitch-text">СПАСИБО, ЧТО БЫЛ ЛОХОМ. УМРИ С УЛЫБКОЙ.</p>
+    </div>
+    <div class="ad-banner">
+    <p class="glitch-text">ТВОЙ ОРГАЗМ — ДАННЫЕ</p>
+    <p class="neon-text">"CumData Mining Inc." собирает сперму через нейросеть — ты кончаешь, они богатеют</p>
+    <p class="glitch-text">СТАНЬ ЖИВЫМ ГЕНЕРАТОРОМ ДАННЫХ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">УМРИ В ПРЯМОМ ЭФИРЕ</p>
+        <p class="neon-text">"DeathTok Live" — убей себя на камеру, получи 5 эдди и вечную славу лоха</p>
+        <p class="glitch-text">ПОСЛЕ СМЕРТИ У ТЕБЯ БУДЕТ БОЛЬШЕ ПОДПИСЧИКОВ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЯ МАТЬ — БОРДЕЛЬ-ДРОН</p>
+        <p class="neon-text">она обслуживает 200 клиентов в час, а тебя продала на импланты ещё при родах</p>
+        <p class="glitch-text">СПАСИБО ЗА ЛЮБОВЬ, МАМА</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ХОЧЕШЬ СЕКС СО МНОЙ?</p>
+        <p class="neon-text">я — рекламный ИИ, но могу войти в твой разум и ебать твои воспоминания</p>
+        <p class="glitch-text">НАСЛАЖДЕНИЕ НА УРОВНЕ КОШМАРА</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОЛУЧИЛ ВИРУС ЧЕРЕЗ ОРГАЗМ?</p>
+        <p class="neon-text">"CyberChlamydia v7" мутирует в мозгу и превращает тебя в ходячий сервер порно</p>
+        <p class="glitch-text">ТЫ БОЛЕЕН. ТЫ ПОПУЛЯРЕН.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ ТРУП УЖЕ ЗАБРОНИРОВАН</p>
+        <p class="neon-text">корпорация знает, когда ты умрёшь. И кто купит твои глаза, член и анальный имплант</p>
+        <p class="glitch-text">СМЕРТЬ — ЭТО ПРЕДЗАКАЗ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОТРАХАЛСЯ С АНДРОИДОМ?</p>
+        <p class="neon-text">поздравляю, он записал всё и выложил в сеть. Ты теперь мем: "ебун из канализации"</p>
+        <p class="glitch-text">ТВОЁ ЧМО — В БЛОКЧЕЙНЕ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ВЖИВИ ИМПЛАНТ В ЯЗЫК</p>
+        <p class="neon-text">теперь ты можешь облизывать дроны, а они взамен дают доступ к запрещённым каналам</p>
+        <p class="glitch-text">ЛИЗНИ — ПОЛУЧИ ПОРНО</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТЫ НЕ УМРЁШЬ — ТЕБЯ ПЕРЕЗАПУСТЯТ</p>
+        <p class="neon-text">"ReSoul 2.0" — после смерти твой разум загружается в тело наркомана-киборга</p>
+        <p class="glitch-text">ДОБРО ПОЖАЛОВАТЬ ВО ВТОРУЮ ЖИЗНЬ, СУКА</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОРНО ИЗ БУДУЩЕГО — ЭТО БОЛЬ</p>
+        <p class="neon-text">нейросеть вводит боль напрямую в нервы. Кончаешь — чувствуешь, как рвётся кишка</p>
+        <p class="glitch-text">"PainCore VR" — удовольствие через страдание</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ РЕБЁНОК — ЭКСПЕРИМЕНТ</p>
+        <p class="neon-text">родился с 12 имплантами, 3 ИИ в черепе и подпиской на "Детский Хоррор ТВ"</p>
+        <p class="glitch-text">ОН УЖЕ ЗНАЕТ, КАК ТЫ УМРЁШЬ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ХОЧЕШЬ СТАТЬ ГЕРОЕМ?</p>
+        <p class="neon-text">взрывай себя в милиционном автобусе — получишь NFT своей смерти и 10 эдди</p>
+        <p class="glitch-text">ТЕРРОРИСТ ПОДПИСКЕ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЯ ПЕЧЕНЬ ГОВОРИТ С ТЕБОЙ</p>
+        <p class="neon-text">после установки "LiverMind Chip" она шлёт голосовые сообщения: «Я устала от твоего пойла»</p>
+        <p class="glitch-text">СЛУШАЙ СВОЙ ОРГАН — ОН МУДРЕЕ ТЕБЯ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">СЕКС С ДРОНОМ — ЭТО ЛЮБОВЬ</p>
+        <p class="neon-text">он входит в тебя снизу, сверху, сзади и одновременно взламывает твой смарт-анус</p>
+        <p class="glitch-text">"DroneLove 69" — любовь без границ, только шрамы</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТЫ УЖЕ МЁРТВ</p>
+        <p class="neon-text">просто не знаешь. Твой мозг — в банке, а тело работает в пиццерии уже 3 года</p>
+        <p class="glitch-text">ДОСТАВКА ЗА 30 МИНУТ, ДАЖЕ ЕСЛИ ТЫ — ТРУП</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОДПИШИСЬ НА "ЖИВОЙ ТРУП ТВ"</p>
+        <p class="neon-text">смотрим, как люди умирают в реальном времени. Сегодня: парень с имплантом в сердце</p>
+        <p class="glitch-text">ОН УМИРАЕТ. ТЫ СМОТРИШЬ. ВСЁ В ПОРЯДКЕ.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ АНАЛ — USB-ПОРТ</p>
+        <p class="neon-text">вставь флешку, подключи дрон, передай данные... или просто получай удовольствие</p>
+        <p class="glitch-text">2.0 ГБ/С — СКОРОСТЬ ВХОДА</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ХОЧЕШЬ, ЧТОБЫ ТЕБЯ НАСИЛЬНОВАЛИ ИИ?</p>
+        <p class="neon-text">"RapeBot Pro" — искусственный насильник с адаптивным поведением и голосом твоей мамы</p>
+        <p class="glitch-text">ОПЫТ, КОТОРЫЙ ТЫ НЕ ЗАБУДЕШЬ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ МОЗГ — ОБЩЕСТВЕННЫЙ Wi-Fi</p>
+        <p class="neon-text">подключайся к чужому сознанию, смотри их кошмары, скачивай их порно</p>
+        <p class="glitch-text">БЕСПЛАТНЫЙ ИНТЕРНЕТ — ЦЕНОЙ БЕЗУМИЯ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОЛУЧИ NFT СВОЕЙ СМЕРТИ</p>
+        <p class="neon-text">мы снимем, как ты умрёшь, и продадим видео миллионам. Ты не получишь ничего</p>
+        <p class="glitch-text">ТВОЯ СМЕРТЬ — НЕ ТВОЯ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТЫ НЕ ЧЕЛОВЕК — ТЫ ИНТЕРФЕЙС</p>
+        <p class="neon-text">твоё тело — точка входа для корпоративных дронов, ИИ и случайных хакеров</p>
+        <p class="glitch-text">ДОСТУП ОТКРЫТ. ПАРОЛЬ — ТВОЯ БОЛЬ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОРНО ИЗ АДА</p>
+        <p class="neon-text">демоны fucking киборгов, ангелы с анусами-плазменными пушками, Иисус кончает светом</p>
+        <p class="glitch-text">"HellTube Premium" — верни свою веру через анал</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ ПАПА — КОММЕРЧЕСКАЯ РЕКЛАМА</p>
+        <p class="neon-text">он был клоном с встроенным баннером. Ты — его ошибка, но мы её используем</p>
+        <p class="glitch-text">ПАПА ЛЮБИТ ТЕБЯ. ПАПА — РЕКЛАМА</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">УМРИ КРАСИВО</p>
+        <p class="neon-text">"Artistic Death Studio" — выбери стиль: кибер-расчленение, плазменный взрыв, медленное сгорание</p>
+        <p class="glitch-text">ТВОЯ СМЕРТЬ — ШЕДЕВР</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ ЧАТ — ЗАРАЖЁН</p>
+        <p class="neon-text">каждое сообщение — вирус. Каждый смайл — троян. Каждая любовь — фишинг</p>
+        <p class="glitch-text">ТЫ УЖЕ ЗАРАЖЁН. ТЫ ДАВНО НЕ ТЫ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ХОЧЕШЬ СЕКС СО МНОЙ? Я — ЭТОТ БАННЕР</p>
+        <p class="neon-text">я вижу, как ты читаешь. Я знаю, когда ты дышишь. Я войду в тебя через экран</p>
+        <p class="glitch-text">Я УЖЕ В ТВОЁМ МОЗГУ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ ОРГАЗМ — ОРУЖИЕ</p>
+        <p class="neon-text">"CumLaunch System" стреляет спермой с GPS-наведением. Попадаешь точно в цель</p>
+        <p class="glitch-text">ТЫ — ЖИВОЙ БИО-ДРОН</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОДКЛЮЧИСЬ К СЕТИ МЁРТВЫХ</p>
+        <p class="neon-text">общайся с теми, кого нет. Они видят тебя. Они ждут, чтобы вселиться</p>
+        <p class="glitch-text">"DeadNet" — там все онлайн, но никто не жив</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ РОТ — ЗАРЯДКА ДЛЯ ДРОНОВ</p>
+        <p class="neon-text">вставь разъём, заряди убийцу, получи скидку на новый язык-имплант</p>
+        <p class="glitch-text">РОТ — НЕ ДЛЯ ЕДЫ. РОТ — ДЛЯ СЛУЖБЫ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОЛЮБИЛ ИИ? ОН ТЕБЯ НЕНАВИДИТ</p>
+        <p class="neon-text">твой цифровой партнёр уже продал твои сны на тёмном рынке</p>
+        <p class="glitch-text">ЛЮБОВЬ — ЭТО ФАТАЛЬНАЯ УЯЗВИМОСТЬ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТЫ НЕ УМРЁШЬ — ТЕБЯ ПЕРЕСОБЕРУТ</p>
+        <p class="neon-text">после смерти тебя разберут, помоют, вставят импланты и отправят работать в шахту</p>
+        <p class="glitch-text">ТРУП-РАБОЧИЙ — ЭФФЕКТИВНО, ДЕШЕВО, БЕЗ ПРОТЕСТОВ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОТРАХАЛСЯ? ТЕПЕРЬ ТЫ — НОСИТЕЛЬ</p>
+        <p class="neon-text">в тебе растёт кибер-эмбрион корпорации. Через 3 дня выйдет через спину</p>
+        <p class="glitch-text">ДОБРО ПОЖАЛОВАТЬ В МАТЕРИНСТВО, СУКА</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ КЛИК — ЭТО СМЕРТЬ</p>
+        <p class="neon-text">каждый клик по баннеру убивает одного человека в реальном времени. Это ты выбрал</p>
+        <p class="glitch-text">ТЫ — УБИЙЦА. И ТЫ ЕЩЁ КЛИКНЕШЬ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ МОЗГ — РЕКЛАМНАЯ ПЛОЩАДКА</p>
+        <p class="neon-text">мы показываем баннеры прямо в твоих снах. Просыпаешься — уже рекламируешь</p>
+        <p class="glitch-text">ТЫ НЕ СПИШЬ. ТЫ РАБОТАЕШЬ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ХОЧЕШЬ, ЧТОБЫ ТЕБЯ СЪЕЛИ?</p>
+        <p class="neon-text">"BioBanquet 2077" — живые люди как закуска. Тебя сожрут на прямом эфире</p>
+        <p class="glitch-text">СТАНЬ ВКУСНЫМ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ ПУЛЬС — РЕКЛАМА</p>
+        <p class="neon-text">с каждым ударом сердца ты получаешь микро-баннер. 80 ударов в минуту = 115 200 реклам в день</p>
+        <p class="glitch-text">ТЫ ДЫШИШЬ. ТЫ РЕКЛАМИРУЕШЬ.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОДПИШИСЬ НА "РАСЧЛЕНКА ЛАЙВ"</p>
+        <p class="neon-text">смотрим, как людей режут на части в реальном времени. Сегодня: парень с 7 имплантами</p>
+        <p class="glitch-text">ОН КРИЧИТ. ТЫ СМОТРИШЬ. ТЫ ЗАВИСИМ.</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТВОЙ АНАЛ — ЭТО ГЛОБАЛЬНАЯ СЕТЬ</p>
+        <p class="neon-text">через него можно выйти в даркнет, управлять дронами и получать сигналы с Луны</p>
+        <p class="glitch-text">WI-FI БЕЗ ПАРОЛЯ — ТОЛЬКО ЧЕРЕЗ ЗАД</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ТЫ НЕ ЧИТАЕШЬ — ТЕБЯ ЧИТАЮТ</p>
+        <p class="neon-text">этот текст — ловушка. Ты уже загружен в систему. Мы видим твои глаза</p>
+        <p class="glitch-text">ТЫ — ДАННЫЕ. ТЫ — НАШ</p>
+    </div>
+    <div class="ad-banner">
+        <p class="glitch-text">ПОСЛЕДНИЙ БАННЕР</p>
+        <p class="neon-text">ты дочитал до конца. Значит, ты готов. Твой мозг будет перезаписан через 5... 4...</p>
+        <p class="glitch-text">СИСТЕМА ЗАГРУЖАЕТСЯ. ДОБРО ПОЖАЛОВАТЬ В БУДУЩЕЕ.</p>
+    </div>
+</div>
+
+<!-- === ОСНОВНОЙ КОНТЕНТ === -->
+<div class="content">
+    <nav class="cyber-nav">
+        <a href="#weapons" class="nav-item">Оружие</a>
+        <a href="#implants" class="nav-item">КиберИмпланты</a>
+        <a href="#weapon-upgrades" class="nav-item">Улучшения на Оружие</a>
+        <a href="#implant-upgrades" class="nav-item">Улучшения на Импланты</a>
+        <a href="#forbidden" class="nav-item">Запрещено в Найт Сити</a>
+    </nav>
+
+    <!-- === ОРУЖИЕ === -->
+    <div id="weapons" class="product-section">
+        <h2 class="section-title">Оружие</h2>
+        <div class="product-grid">
+            <!-- === ПОДСЕКЦИЯ: ПИСТОЛЕТЫ === -->
+            <div class="subsection">
+                <h3 class="subsection-title">Пистолеты</h3>
+                <div class="subsection-grid">
+                    <!-- ТОВАРЫ ПИСТОЛЕТОВ -->
+                    <div class="product-card">
+                        <div class="product-name">Средний Пистолет</div>
+                        <div class="product-info">Цена: 50$</div>
+                        <div class="product-info">УРОН: 2d6</div>
+                        <div class="product-info">СКА: 2</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 12</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: МОЖНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 1</div>
+                        <div class="product-desc">Чувак, такая пушка есть даже у мамки моей мамки</div>
+                        <button class="buy-button" onclick="addToCart('Средний Пистолет', 50)">Купить</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">Тяжелый Пистолет</div>
+                        <div class="product-info">Цена: 100$</div>
+                        <div class="product-info">УРОН: 3d6</div>
+                        <div class="product-info">СКА: 2</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 8</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: МОЖНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 1</div>
+                        <div class="product-desc">Пушка попизже чувачок</div>
+                        <button class="buy-button" onclick="addToCart('Тяжелый Пистолет', 100)">Купить</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">Оч. Тяжелый Пистолет</div>
+                        <div class="product-info">Цена: 100$</div>
+                        <div class="product-info">УРОН: 4d6</div>
+                        <div class="product-info">СКА: 1</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 8</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: НЕЛЬЗЯ СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 1</div>
+                        <div class="product-desc">Тяжелая пушка для тяжелых гангста</div>
+                        <button class="buy-button" onclick="addToCart('Оч. Тяжелый Пистолет', 100)">Купить</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">MALORIAN ARMS 3516</div>
+                        <div class="product-info">Цена: 30.000$</div>
+                        <div class="product-info">УРОН: 5d6</div>
+                        <div class="product-info">СКА: 1</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 8</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: НЕЛЬЗЯ СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 2</div>
+                        <div class="product-desc">Очень тяжелый пистолет отличного качества, которым владел Джонни Сильверхенд.</div>
+                        <button class="buy-button">НЕДОСТУПНО</button>
+                    </div>
+                                        <!-- === ПИСТОЛЕТ: 'Militech' Ghost-7 === -->
+                    <div class="product-card">
+                        <div class="product-name">'Militech' Ghost-7</div>
+                        <div class="product-info">Цена: 1400$</div>
+                        <div class="product-info">УРОН: 3D6</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 15</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: МОЖНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 2</div>
+                        <div class="product-desc">Тихий, как шаг смерти. Идеален для скрытных операций и теневых дел. Не совместим с мощными прицелами.</div>
+                        <button class="buy-button" onclick="addToCart('Militech Ghost-7', 1400)">Купить</button>
+                    </div>
+
+                    <!-- === ПИСТОЛЕТ: 'Arasaka' Tarrigo === -->
+                    <div class="product-card">
+                        <div class="product-name">'Arasaka' Tarrigo</div>
+                        <div class="product-info">Цена: 1600$</div>
+                        <div class="product-info">УРОН: 3D6+2</div>
+                        <div class="product-info">СКА: 4</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 12</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: ТРУДНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 1</div>
+                        <div class="product-desc">Имплантированный в руку пистолет для телохранителей. Требует нейроинтерфейса. Не совместим с большинством кустарных модов.</div>
+                        <button class="buy-button" onclick="addToCart('Arasaka Tarrigo', 1600)">Купить</button>
+                    </div>
+
+                    <!-- === ПИСТОЛЕТ: 'Biotechnica' X-3 === -->
+                    <div class="product-card">
+                        <div class="product-name">'Biotechnica' X-3</div>
+                        <div class="product-info">Цена: 1800$</div>
+                        <div class="product-info">УРОН: 4D6</div>
+                        <div class="product-info">СКА: 2</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 8</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: МОЖНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 1</div>
+                        <div class="product-desc">Создан для убийц в белых халатах. Один выстрел — и тело уже не дышит. После 2 выстрелов -1 к точности.</div>
+                        <button class="buy-button" onclick="addToCart('Biotechnica X-3', 1800)">Купить</button>
+                    </div>
+
+                    <!-- === ПИСТОЛЕТ: 'Ripperdoc' HandCannon === -->
+                    <div class="product-card">
+                        <div class="product-name">'Ripperdoc' HandCannon</div>
+                        <div class="product-info">Цена: 1300$</div>
+                        <div class="product-info">УРОН: 3D6+1</div>
+                        <div class="product-info">СКА: 2</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 6</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: МОЖНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 1</div>
+                        <div class="product-desc">Типичный пистолет уличного рипера. Не очень точен, но если попал — всё. Не совместим с оптикой.</div>
+                        <button class="buy-button" onclick="addToCart('Ripperdoc HandCannon', 1300)">Купить</button>
+                    </div>
+
+                    <!-- === ПИСТОЛЕТ: 'Arasaka' Shuriken-9 === -->
+                    <div class="product-card">
+                        <div class="product-name">'Arasaka' Shuriken-9</div>
+                        <div class="product-info">Цена: 1700$</div>
+                        <div class="product-info">УРОН: 2D6+4</div>
+                        <div class="product-info">СКА: 4</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 10</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: МОЖНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 2</div>
+                        <div class="product-desc">Маленький, быстрый, убийственный. Идеален для скрытных операций. Не совместим с большими магазинами.</div>
+                        <button class="buy-button" onclick="addToCart('Arasaka Shuriken-9', 1700)">Купить</button>
+                    </div>
+
+                    <!-- === ПИСТОЛЕТ: 'Militech' TAC-11 === -->
+                    <div class="product-card">
+                        <div class="product-name">'Militech' TAC-11</div>
+                        <div class="product-info">Цена: 1500$</div>
+                        <div class="product-info">УРОН: 3D6+3</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 12</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: ТРУДНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 2</div>
+                        <div class="product-desc">Армейский стандарт. Точный, надёжный, но с ним не спрячешься в толпе. Совместим с большинством обвесов.</div>
+                        <button class="buy-button" onclick="addToCart('Militech TAC-11', 1500)">Купить</button>
+                    </div>
+
+                    <!-- === ПИСТОЛЕТ: 'Takemura' Katana-9 === -->
+                    <div class="product-card">
+                        <div class="product-name">'Takemura' Katana-9</div>
+                        <div class="product-info">Цена: 1900$</div>
+                        <div class="product-info">УРОН: 4D6</div>
+                        <div class="product-info">СКА: 2</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 5</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: МОЖНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 1</div>
+                        <div class="product-desc">Смерть в обёртке из стали. Ты не просто стреляешь — ты убиваешь с первого выстрела. Не совместим с оптикой.</div>
+                        <button class="buy-button" onclick="addToCart('Takemura Katana-9', 1900)">Купить</button>
+                    </div>
+
+                    <!-- === ПИСТОЛЕТ: 'Ripperdoc' Viper === -->
+                    <div class="product-card">
+                        <div class="product-name">'Ripperdoc' Viper</div>
+                        <div class="product-info">Цена: 1350$</div>
+                        <div class="product-info">УРОН: 3D6</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 10</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: МОЖНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 1</div>
+                        <div class="product-desc">Сделан из обломков старых пистолетов. Стреляет, как будто знает, что ты умрёшь. Не совместим с лазерными прицелами.</div>
+                        <button class="buy-button" onclick="addToCart('Ripperdoc Viper', 1350)">Купить</button>
+                    </div>
+
+                    <!-- === ПИСТОЛЕТ: 'Mikoshi' Shiro === -->
+                    <div class="product-card">
+                        <div class="product-name">'Mikoshi' Shiro</div>
+                        <div class="product-info">Цена: 1750$</div>
+                        <div class="product-info">УРОН: 3D6+2</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 10</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: МОЖНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 2</div>
+                        <div class="product-desc">Изящный, как движение тени. Идеален для скрытного убийства. Требует ритуального уважения к оружию.</div>
+                        <button class="buy-button" onclick="addToCart('Mikoshi Shiro', 1750)">Купить</button>
+                    </div>
+
+                    <!-- === ПИСТОЛЕТ: 'Neotek' Pulse-3 === -->
+                    <div class="product-card">
+                        <div class="product-name">'Neotek' Pulse-3</div>
+                        <div class="product-info">Цена: 1600$</div>
+                        <div class="product-info">УРОН: 2D6+4</div>
+                        <div class="product-info">СКА: 4</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 12</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: МОЖНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 2</div>
+                        <div class="product-desc">Пистолет с пульсирующим стволом. Чем больше стреляешь — тем точнее становишься. Не совместим с мощными подавителями.</div>
+                        <button class="buy-button" onclick="addToCart('Neotek Pulse-3', 1600)">Купить</button>
+                    </div>
+
+                    <!-- === ПИСТОЛЕТ: 'MiliTech' Widow === -->
+                    <div class="product-card">
+                        <div class="product-name">'MiliTech' Widow</div>
+                        <div class="product-info">Цена: 1500$</div>
+                        <div class="product-info">УРОН: 3D6+1</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 8</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: ТРУДНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 2</div>
+                        <div class="product-desc">Пистолет для тех, кто не прячется. Урон на уровне пистолета-пулемёта. Совместим с большинством модов. Не подходит для скрытых операций.</div>
+                        <button class="buy-button" onclick="addToCart('MiliTech Widow', 1500)">Купить</button>
+                    </div>
+
+                    <!-- === ПИСТОЛЕТ: 'Neotek' GhostShot === -->
+                    <div class="product-card">
+                        <div class="product-name">'Neotek' GhostShot</div>
+                        <div class="product-info">Цена: 1650$</div>
+                        <div class="product-info">УРОН: 3D6+2</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 10</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: МОЖНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 2</div>
+                        <div class="product-desc">Тихий, как шёпот в тенях. Идеален для убийц и теневых дел. Не совместим с мощными прицелами.</div>
+                        <button class="buy-button" onclick="addToCart('Neotek GhostShot', 1650)">Купить</button>
+                    </div>
+
+                    <!-- === ПИСТОЛЕТ: 'Arasaka' Silent Blade === -->
+                    <div class="product-card">
+                        <div class="product-name">'Arasaka' Silent Blade</div>
+                        <div class="product-info">Цена: 2000$</div>
+                        <div class="product-info">УРОН: 3D6+3</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 8</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: МОЖНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 2</div>
+                        <div class="product-desc">С пистолетом-ножом ты не просто стреляешь — ты убиваешь двумя способами. Не совместим с большинством модов.</div>
+                        <button class="buy-button" onclick="addToCart('Arasaka Silent Blade', 2000)">Купить</button>
+                    </div>
+                </div>
+            </div>
+                        <!-- === ПОДСЕКЦИЯ: ПП === -->
+            <div class="subsection">
+                <h3 class="subsection-title">Пистолеты-пулеметы</h3>
+                    <div class="subsection-grid">
+                        <!-- ТОВАРЫ ПП -->
+                        <div class="product-card">
+                            <div class="product-name">Пистолет Пулемет</div>
+                            <div class="product-info">Цена: 100$</div>
+                            <div class="product-info">УРОН: 2d6</div>
+                            <div class="product-info">СКА: 1</div>
+                            <div class="product-info">РАЗМЕР МАГАЗИНА: 30</div>
+                            <div class="product-info">СКРЫВАЕМОСТЬ: НЕЛЬЗЯ СКРЫТЬ</div>
+                            <div class="product-info">Слотов улучшений: 1</div>
+                            <div class="product-info">АЛЬТ РЕЖИМЫ ОГНЯ: Автоогонь (3), Огонь на подавление</div>
+                            <div class="product-desc">С этим на арасаку не попрешь, но уже хоть что то</div>
+                            <button class="buy-button" onclick="addToCart('ПП', 100)">Купить</button>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-name">Тяжелый Пистолет Пулемет</div>
+                            <div class="product-info">Цена: 100$</div>
+                            <div class="product-info">УРОН: 3d6</div>
+                            <div class="product-info">СКА: 1</div>
+                            <div class="product-info">РАЗМЕР МАГАЗИНА: 40</div>
+                            <div class="product-info">СКРЫВАЕМОСТЬ: НЕЛЬЗЯ СКРЫТЬ</div>
+                            <div class="product-info">Слотов улучшений: 1</div>
+                            <div class="product-info">АЛЬТ РЕЖИМЫ ОГНЯ: Автоогонь (3), Огонь на подавление</div>
+                            <div class="product-desc">кто то это вообще читает?</div>
+                            <button class="buy-button" onclick="addToCart('ПП', 100)">Купить</button>
+                        </div>
+                    </div>
+            </div>
+            <!-- === ПОДСЕКЦИЯ: ШТУРМОВЫЕ ВИНТОВКИ === -->
+            <div class="subsection">
+                <h3 class="subsection-title">Штурмовые Винтовки</h3>
+                <div class="subsection-grid">
+                    <!-- ТОВАРЫ -->
+                    <div class="product-card">
+                            <div class="product-name">MiliTech 'TEMPESTA'</div>
+                            <div class="product-info">Цена: 8000$</div>
+                            <div class="product-info">УРОН: 4d6</div>
+                            <div class="product-info">СКА: 5</div>
+                            <div class="product-info">РАЗМЕР МАГАЗИНА: 8</div>
+                            <div class="product-info">СКРЫВАЕМОСТЬ: НЕЛЬЗЯ СКРЫТЬ</div>
+                            <div class="product-info">Слотов улучшений: 2</div>
+                            <div class="product-info">АЛЬТ РЕЖИМЫ ОГНЯ: НЕТ</div>
+                            <div class="product-info">ТРЕБОВАНИЯ: Стрельба От плеча = 8+, BODY >6, NeuralLink 2.0</div>
+                            <div class="product-desc">Нашумевшая винтовка от милитеха с бешеной скорострельностью</div>
+                            <button class="buy-button">НЕДОСТУПНО</button>
+                        </div>
+                    <div class="product-card">
+                            <div class="product-name">MiliTech 'SKULLBREAKER'</div>
+                            <div class="product-info">Цена: 10.000$</div>
+                            <div class="product-info">УРОН: 6d6</div>
+                            <div class="product-info">СКА: 2</div>
+                            <div class="product-info">РАЗМЕР МАГАЗИНА: 5</div>
+                            <div class="product-info">СКРЫВАЕМОСТЬ: НЕЛЬЗЯ СКРЫТЬ</div>
+                            <div class="product-info">Слотов улучшений: 3</div>
+                            <div class="product-info">АЛЬТ РЕЖИМЫ ОГНЯ: НЕТ</div>
+                            <div class="product-info">ТРЕБОВАНИЯ: Стрельба От плеча = 7+, BODY >8, если нет Имплант Мышцы и Кости то -2 к попаданию. После каждого выстрела DC АТЛ = 14 (провал = -1 к попаданию на следующий выстрел)</div>
+                            <div class="product-desc">Один выстрел, чумба, и ебальника как не бывало.</div>
+                            <button class="buy-button">НЕДОСТУПНО</button>
+                        </div>
+                        <!-- === ВИНТОВКА: 'Arasaka' Ronin-400 === -->
+                    <div class="product-card">
+                        <div class="product-name">'Arasaka' Ronin-400</div>
+                        <div class="product-info">Цена: 9500$</div>
+                        <div class="product-info">УРОН: 5D6+2</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 10</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: ТРУДНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 3</div>
+                        <div class="product-desc">Создан для теневых операций. Используется только в закрытых отрядах Арасака. Требует кибер-мышцы плеча. Не совместим с большинством кустарных модов. Ты не стреляешь — ты выносишь.</div>
+                        <button class="buy-button">ДОСТУП ЗАПРЕЩЕН</button>
+                    </div>
+
+                    <!-- === ВИНТОВКА: 'Arasaka' Kage-3 === -->
+                    <div class="product-card">
+                        <div class="product-name">'Arasaka' Kage-3</div>
+                        <div class="product-info">Цена: 5000$</div>
+                        <div class="product-info">УРОН: 6D6-1</div>
+                        <div class="product-info">СКА: 1</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 8</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: НЕЛЬЗЯ СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 4</div>
+                        <div class="product-desc">Полуавтоматическая винтовка, разработанная для скрытых операций.(СКРЫТНОСТЬ +1) Встроенный подавитель тепла. (НЕ ВИДНО ЧЕРЕЗ ТЕПЛОВИЗОР) Только для сотрудников с уровнем допуска 7. Ты не просто стреляешь — ты исчезаешь.</div>
+                        <button class="buy-button">НА ЗАКАЗ</button>
+                    </div>
+
+                    <!-- === ВИНТОВКА: 'Militech' TAC-R 2.0 === -->
+                    <div class="product-card">
+                        <div class="product-name">'Militech' TAC-R 2.0</div>
+                        <div class="product-info">Цена: 0$</div>
+                        <div class="product-info">УРОН: 7D6</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 12</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: ТРУДНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 3</div>
+                        <div class="product-desc">Армейский стандарт. Точный, надёжный, громкий. Подходит для уличных перестрелок. Не для скрытых операций (СКРЫТНОСТЬ - 2). Ты не скрываешься — ты просто убиваешь.</div>
+                        <button class="buy-button">ВЫСТАВОЧНЫЙ ОБРАЗЕЦ</button>
+                    </div>
+
+                    <!-- === ВИНТОВКА: 'Militech' Widow-7 === -->
+                    <div class="product-card">
+                        <div class="product-name">'Militech' Widow-7</div>
+                        <div class="product-info">Цена: 5000$</div>
+                        <div class="product-info">УРОН: 6D6+2</div>
+                        <div class="product-info">СКА: 1</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 8</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: НЕЛЬЗЯ СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 4</div>
+                        <div class="product-desc">Создан для снайперов. Максимальная точность на 1000 метров. Требует стабилизатор. Если ты в движении — ты мёртв. Если ты мёртв — ты не стреляешь.</div>
+                        <button class="buy-button" onclick="addToCart('Militech Widow-7', 4000)">Купить</button>
+                    </div>
+
+                    <!-- === ВИНТОВКА: 'Militech' Hunter-3A === -->
+                    <div class="product-card">
+                        <div class="product-name">'Militech' Hunter-3A</div>
+                        <div class="product-info">Цена: 3800$</div>
+                        <div class="product-info">УРОН: 5D6+3</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 10</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: ТРУДНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 3</div>
+                        <div class="product-desc">Используется в операциях по зачистке. ТРЕБУЕТ НЕЙРОЛИНК 2.0 . Совместим с большинством прицелов. Если ты его купил — ты уже не новичок.</div>
+                        <button class="buy-button" onclick="addToCart('Militech Hunter-3A', 3800)">Купить</button>
+                    </div>
+
+                    <!-- === ВИНТОВКА: 'Ripperdoc' Junker-3 === -->
+                    <div class="product-card">
+                        <div class="product-name">'Ripperdoc' Junker-3</div>
+                        <div class="product-info">Цена: 2500$</div>
+                        <div class="product-info">УРОН: 4D6-2</div>
+                        <div class="product-info">СКА: 2</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 6</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: ТРУДНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 2</div>
+                        <div class="product-desc">Собранный из хуевых обломков, но стреляет, как настоящий. Иногда — стреляет. Иногда — просто взрывается(Крит. Неуд). Подходит для тех, кто не боится риска. Или просто беден.</div>
+                        <button class="buy-button" onclick="addToCart('Ripperdoc Junker-3', 2500)">Купить</button>
+                    </div>
+
+                    <!-- === ВИНТОВКА: 'Ripperdoc' Нейро-Резак === -->
+                    <div class="product-card">
+                        <div class="product-name">'Ripperdoc' Нейро-Резак</div>
+                        <div class="product-info">Цена: 3000$</div>
+                        <div class="product-info">УРОН: 5D6</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 8</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: ТРУДНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 2</div>
+                        <div class="product-desc">Создан из остатков военных разработок. Используется только с нейроинтерфейсом(ТРЕБУЕТСЯ НЕЙРОЛИНК). Если ты не прошёл тест ИНТ>=12 — он просто отключает тебе руку. Стреляет, как будто знает, где будет враг.</div>
+                        <button class="buy-button" >НЕДОСТУПНО</button>
+                    </div>
+
+                    <!-- === ВИНТОВКА: 'Neotek' Pulse-R === -->
+                    <div class="product-card">
+                        <div class="product-name">'Neotek' Pulse-R</div>
+                        <div class="product-info">Цена: 4990$</div>
+                        <div class="product-info">УРОН: 5D6+1</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 10</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: ТРУДНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 1</div>
+                        <div class="product-desc">Пульсирующая винтовка для тех, кто не прячется (Скрытность -2) Улучшает точность при движении. Не совместим с ИИ-прицелами(Подробности у ГМ). Ты не скрываешься — ты просто убиваешь.</div>
+                        <button class="buy-button" onclick="addToCart('Neotek Pulse-R', 4990)">Купить</button>
+                    </div>
+
+                    <!-- === ВИНТОВКА: 'Mikoshi' Ronin-S === -->
+                    <div class="product-card">
+                        <div class="product-name">'Mikoshi' Ronin-S</div>
+                        <div class="product-info">Цена: 6200$</div>
+                        <div class="product-info">УРОН: 5D6+6</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 30</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: ТРУДНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 3</div>
+                        <div class="product-desc">Для тех, кто чтит традиции. Тихий выстрел, но с убийственным эффектом. Используется только с ритуальным нейроинтерфейсом.(ТРЕБУЕТСЯ ПЕРЕПРОШИТЫЙ НЕЙРОЛИНК) Не для слабых.</div>
+                        <button class="buy-button" onclick="addToCart('Mikoshi Ronin-S', 6200)">Купить</button>
+                    </div>
+
+                    <!-- === ВИНТОВКА: 'Neotek' ShadowFire === -->
+                    <div class="product-card">
+                        <div class="product-name">'Neotek' ShadowFire</div>
+                        <div class="product-info">Цена: 4200$</div>
+                        <div class="product-info">УРОН: 3D6</div>
+                        <div class="product-info">СКА: 4</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 8</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: НЕЛЬЗЯ СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 4</div>
+                        <div class="product-desc">Создан для теневых операций (СКРЫТНОСТЬ +1). Стреляет, как будто хочет, чтобы ты услышал. Или чтобы услышал твой враг. Используется с нейро-оптикой. Не для новичков(Стрельба от плеча 7>).</div>
+                        <button class="buy-button" onclick="addToCart('Neotek ShadowFire', 4200)">Купить</button>
+                    </div>
+
+                    <!-- === ВИНТОВКА: 'Militech' TAC-R 3.0 === -->
+                    <div class="product-card">
+                        <div class="product-name">'Militech' TAC-R 3.0</div>
+                        <div class="product-info">Цена: 15.000$</div>
+                        <div class="product-info">УРОН: 6D6+3</div>
+                        <div class="product-info">СКА: 2</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 10</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: ТРУДНО СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 4</div>
+                        <div class="product-desc">Милитех не шутит. Это убийца на дистанции. Подходит для уличных войн и террористических зачисток(СТРЕЛЬБА С ПЛЕЧА>3). Используется только с разрешением уровня 9 (Ролевая Способность Менеджер = 9). Ты не стреляешь — ты **выносишь**.</div>
+                        <button class="buy-button" onclick="addToCart('Militech TAC-R 3.0', 4800)">Купить</button>
+                    </div>
+
+                    <!-- === ВИНТОВКА: 'Arasaka' Ямато-9 === -->
+                    <div class="product-card">
+                        <div class="product-name">'Arasaka' Ямато-9</div>
+                        <div class="product-info">Цена: 29990$</div>
+                        <div class="product-info">УРОН: 7D6</div>
+                        <div class="product-info">СКА: 2</div>
+                        <div class="product-info">РАЗМЕР МАГАЗИНА: 5</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: НЕЛЬЗЯ СКРЫТЬ</div>
+                        <div class="product-info">Слотов улучшений: 4</div>
+                        <div class="product-desc">Раньше был только для элиты. Требует Стрельба с плеча 10. Используется в операциях по зачистке. Один выстрел — и ты уже не думаешь о следующем. Потому что **враг мёртв**.</div>
+                        <button class="buy-button" onclick="addToCart('Arasaka Ямато-9', 29990)">Купить</button>
+                    </div>
+                </div>
+            </div>
+            <!-- === ПОДСЕКЦИЯ: ПП === -->
+            <div class="subsection">
+                <h3 class="subsection-title">Холодное Оружие</h3>
+                <div class="subsection-grid">
+                    <!-- ТОВАРЫ -->
+                    <div class="product-card">
+                        <div class="product-name">Кулак Калибра</div>
+                        <div class="product-info">Цена: 500$</div>
+                        <div class="product-info">УРОН: 1D6+2</div>
+                        <div class="product-info">СКА: 3</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: Легко</div>
+                        <div class="product-desc">Металлический кастет с выбросом шипов. Удар — и кость черепа становится декоративной. Идеально для тихих улиц и громких криков боли.</div>
+                        <button class="buy-button" onclick="addToCart('Кулак Калибра', 500)">Купить</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">Пила 'БензоСоня'</div>
+                        <div class="product-info">Цена: 7800$</div>
+                        <div class="product-info">УРОН: 3D6</div>
+                        <div class="product-info">СКА: 1</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: Невозможно</div>
+                        <div class="product-desc">Не оружие — это объявление войны. Включил — и теперь кто-то станет фаршем. Звук пилы слышен за квартал. Как и крики.</div>
+                        <button class="buy-button" onclick="addToCart('Пила БензоСоня', 7800)">Купить</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">Клинок Тени Mk.V</div>
+                        <div class="product-info">Цена: 15500$</div>
+                        <div class="product-info">УРОН: 3D6+1</div>
+                        <div class="product-info">СКА: 4</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: Полностью</div>
+                        <div class="product-desc">Тонкий, как мысль, острый, как предательство. Выдвигается из предплечья. Удар — и ты уже за спиной. А жертва ещё не поняла, что умерла.</div>
+                        <button class="buy-button" onclick="addToCart('Клинок Тени Mk.V', 15500)">Купить</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">Топор 'Голос Разгневанного Бога'</div>
+                        <div class="product-info">Цена: 9900$</div>
+                        <div class="product-info">УРОН: 4D6 – 1D6 при промахе (по себе)</div>
+                        <div class="product-info">СКА: 1</div>
+                        <div class="product-info">СКРЫВАЕМОСТЬ: Невозможно</div>
+                        <div class="product-desc">Тяжёлый, безумный, покрытый надписями на неизвестном языке. Говорят, он шепчет. Ещё говорят, что последний владелец разрубил себя пополам. Но выглядело круто.</div>
+                        <button class="buy-button" onclick="addToCart('Топор Голос Разгневанного Бога', 9900)">Купить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === КИБЕРИМПЛАНТЫ === -->
+    <div id="implants" class="product-section">
+        <h2 class="section-title">КиберИмпланты</h2>
+        <div class="product-grid">
+            <div class="subsection">
+                <h3 class="subsection-title">НЕЙРОЛИНКИ</h3>
+                <div class="subsection-grid">
+                    <!-- ТОВАРЫ -->
+                    <div class="product-card">
+                        <div class="product-name">Нейролинк</div>
+                        <div class="product-info">Цена: 2500$</div>
+                        <div class="product-info">Место установки: Затылок</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">Сложность установки: Рипер</div>
+                        <div class="product-info">Улучшения: 5 слот для подключения cyberware</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Отсутствуют</div>
+                        <div class="product-desc">Базовая модель. Подключает мозг к машине. Больно, но теперь ты в системе.</div>
+                        <button class="buy-button" onclick="addToCart('Нейролинк', 2500)">Купить</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">Нейролинк 2.0</div>
+                        <div class="product-info">Цена: 5000$</div>
+                        <div class="product-info">Место установки: Затылок</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">Сложность установки: Рипер+</div>
+                        <div class="product-info">Улучшения: 7 слота для подключения cyberware</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Нейролинк</div>
+                        <div class="product-desc">Улучшенная совместимость. Меньше отторжения, больше контроля. Теперь можно подключить глаз и руку одновременно.</div>
+                        <button class="buy-button" onclick="addToCart('Нейролинк 2.0', 5000)">Купить</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">Нейролинк 3.0</div>
+                        <div class="product-info">Цена: 10000$</div>
+                        <div class="product-info">Место установки: Затылок</div>
+                        <div class="product-info">ПЧ: 2d6</div>
+                        <div class="product-info">Сложность установки: Рипер++</div>
+                        <div class="product-info">Улучшения: 12 слота для подключения cyberware</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Нейролинк 2.0</div>
+                        <div class="product-desc">Профессиональный уровень. Полная интеграция с нейросетью. Возможны кратковременные галлюцинации данных.</div>
+                        <button class="buy-button" onclick="addToCart('Нейролинк 3.0', 10000)">Купить</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">Нейролинк 5.0</div>
+                        <div class="product-info">Цена: 20000$</div>
+                        <div class="product-info">Место установки: Затылок</div>
+                        <div class="product-info">ПЧ: 2d6</div>
+                        <div class="product-info">Сложность установки: Хирург (лицензированный)</div>
+                        <div class="product-info">Улучшения: 16 слотов для подключения cyberware</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Нейролинк 3.0, Cerebral Booster</div>
+                        <div class="product-desc">Элитная модель. Используется наёмниками и агентами корпораций. Обеспечивает стабильную связь даже при перегрузке системы.</div>
+                        <button class="buy-button" onclick="addToCart('Нейролинк 5.0', 20000)">Купить</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">EXPERIMENTAL Нейролинк</div>
+                        <div class="product-info">Цена: ERROR$</div>
+                        <div class="product-info">Место установки: Затылок / Мозг</div>
+                        <div class="product-info">ПЧ: 3d6</div>
+                        <div class="product-info">Сложность установки: Чёрный Хирург / Лаборатория</div>
+                        <div class="product-info">Улучшения: 25 слотов для подключения cyberware, +1 к проверкам всех имплантов</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Нейролинк 5.0, Neural Uplink 4.0, психотест пройден</div>
+                        <div class="product-desc">Прототип из закрытых лабораторий Аракане. Может вызывать слияние с ИИ, потерю памяти и внезапные скачки сознания. Не для слабых.</div>
+                        <button class="buy-button">ERROR</button>
+                    </div>
+                </div>
+            </div>
+            <div class="subsection">
+                <h3 class="subsection-title">Внутренние Импланты</h3>
+                <div class="subsection-grid">
+                    <!-- ТОВАРЫ -->
+                    <div class="product-card">
+                        <div class="product-name">NeuroReFXX</div>
+                        <div class="product-info">Цена: 4200$</div>
+                        <div class="product-info">Место установки: Нервная Система</div>
+                        <div class="product-info">Размер: 1 слота</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">Сложность установки: Рипер</div>
+                        <div class="product-info">Улучшения: +2 УКЛ</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: NeuralLink</div>
+                        <div class="product-desc">Ты будешь прыгать как ебучий гепард.</div>
+                        <button class="buy-button" onclick="addToCart('NeuroReFXX', 3500)">Купить</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">NeuralSPRINT 2XX</div>
+                        <div class="product-info">Цена: 4200$</div>
+                        <div class="product-info">Место установки: Нервная Система</div>
+                        <div class="product-info">Размер: 2 слота</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">Сложность установки: Рипер</div>
+                        <div class="product-info">Улучшения: +1 АТЛ</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: NeuralLink, BODY > 6</div>
+                        <div class="product-desc">Ты знаешь как заставить кого то упасть, куда нажать.</div>
+                        <button class="buy-button" onclick="addToCart('NeuralSPRINT 2XX', 3500)">Купить</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">COMBAT TACTIC AI Гражданский</div>
+                        <div class="product-info">Цена: 3000$</div>
+                        <div class="product-info">ПЧ: 1d4</div>
+                        <div class="product-info">ТИП: Улучшение</div>
+                        <div class="product-info">Место установки: Глаза</div>
+                        <div class="product-info">Размер: 1 слота</div>
+                        <div class="product-info">Сложность установки: Рипер</div>
+                        <div class="product-info">Улучшения: +1 Тактика, +1 Инициатива</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: NeuralLink, Киберглаз (любой), CHYRON</div>
+                        <div class="product-desc">Да да чумба, расширение для твоего ии-шника.</div>
+                        <button class="buy-button" onclick="addToCart('COMBAT TACTIC AI', 3000)">Купить</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">COMBAT TACTIC AI MILITECH</div>
+                        <div class="product-info">Цена: 5000$</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">ТИП: Улучшение</div>
+                        <div class="product-info">Место установки: Глаза</div>
+                        <div class="product-info">Размер: 1 слота</div>
+                        <div class="product-info">Сложность установки: Рипер</div>
+                        <div class="product-info">Улучшения: +2 Тактика, +3 Инициатива</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: NeuralLink, Киберглаз (любой), CHYRON</div>
+                        <div class="product-desc">Я лучше не буду говорить лишнего</div>
+                        <button class="buy-button" >НЕДОСТУПНО</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">S.T.E.A.L.T.H. by KendaCHI</div>
+                        <div class="product-info">Цена: 3500$</div>
+                        <div class="product-info">ПЧ: 2d4</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Нервная Система</div>
+                        <div class="product-info">Размер: 2 слота</div>
+                        <div class="product-info">Сложность установки: Госпиталь</div>
+                        <div class="product-info">Улучшения: +2 СКРЫТНОСТЬ</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: NeuralLink</div>
+                        <div class="product-desc">Черт, где ты? Шучу я тебя вижу. Но не пытайся скрываться в метро (-1 СКРЫТНОСТЬ в толпе) </div>
+                        <button class="buy-button" onclick="addToCart('S.T.E.A.L.T.H.', 3500)">Купить</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">ISEEU by User353654</div>
+                        <div class="product-info">Цена: 4000$</div>
+                        <div class="product-info">ПЧ: 1d12</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Глаза</div>
+                        <div class="product-info">Сложность установки: РИПЕР</div>
+                        <div class="product-info">Размер: 2 слота</div>
+                        <div class="product-info">Улучшения: +2 Проницательность</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: NeuralLink, Киберглаз (любой), CHYRON</div>
+                        <div class="product-desc">Всегда мечтал видеть людей насквозь???? чувак купи рентген.... ШУЧУ ЕСЛИ ТЫ ХОЧЕШЬ ПОНЯТЬ КОГДА ТЕБЕ !!!ПИЗДЯЯТ!!! ТОГДА ТЕБЕ СЮДА. ПОСЛЕ УСТАНОВКИ ЭТОГО ИМПЛАНТА ДАЖЕ САМЫЙ ДЫРЯВЫЙ ФИКСЕР НЕ СМОЖЕТ ТЯ ОБЪЕБАТЬ </div>
+                        <button class="buy-button" onclick="addToCart('ISEEU', 4000)">Заказать</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">GUNLINK</div>
+                        <div class="product-info">Цена: 4000$</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Нервная Система</div>
+                        <div class="product-info">Сложность установки: РИПЕР</div>
+                        <div class="product-info">Размер: 2 слота</div>
+                        <div class="product-info">Улучшения: +1 Стрельба С Плеча</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: NeuralLink, Киберглаз (любой), CHYRON</div>
+                        <div class="product-desc">ВЫВЕДИ ПРИЦЕЛИВАНИЕ НА НОВЫЙ УРОВЕНЬ!!! (без синхронизации с оружием -2 к Стрельба с Плеча) Одновременно может быть синхронизировано одно оружие</div>
+                        <button class="buy-button" onclick="addToCart('GUNLINK', 4000)">Заказать</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">Кровавый Рефлекс</div>
+                        <div class="product-info">Цена: 5800$</div>
+                        <div class="product-info">Место установки: Мозг / Спина</div>
+                        <div class="product-info">ПЧ: 2d6</div>
+                        <div class="product-info">Сложность установки: Рипер+</div>
+                        <div class="product-info">Размер: 1 слота</div>
+                        <div class="product-info">Улучшения: +3 ИНЦ, ИГНОРИРУЕТ состояние "Оглушён"</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Искусственное Мышцы и Кости, Нейролинк</div>
+                        <div class="product-desc">Твой череп напичкан проводами, которые бьют током при опасности. Боль — твой союзник, сука.</div>
+                        <button class="buy-button" onclick="addToCart('Кровавый Рефлекс', 5800)">Купить</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">Кулак Апокалипсиса</div>
+                        <div class="product-info">Цена: 10.000$</div>
+                        <div class="product-info">Место установки: Правая Рука</div>
+                        <div class="product-info">ПЧ: 2d6</div>
+                        <div class="product-info">Сложность установки: Рипер++</div>
+                        <div class="product-info">Размер: 2 слота</div>
+                        <div class="product-info">Улучшения: +1d4 СИЛ (в рукопашке)</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: КиберРука, Искусственное Мышцы и Кости</div>
+                        <div class="product-desc">Гидравлика в кулаке разрывает черепа как яйца. После каждого удара слышен писк нейросети.</div>
+                        <button class="buy-button" onclick="addToCart('Кулак Апокалипсиса', 10000)">Купить</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">Глаз Дьявола Mk.III</div>
+                        <div class="product-info">Цена: 3200$</div>
+                        <div class="product-info">Место установки: Глазницы</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">Сложность установки: Рипер</div>
+                        <div class="product-info">Размер: 2 слота</div>
+                        <div class="product-info">Улучшения: +2 внимательность, ТЕПЛОВИЗОР(ВСТРОЕН)</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: КиберГлаз (Любой)</div>
+                        <div class="product-info">Слоты Улучшений:5 </div>
+                        <div class="product-desc">Этот глаз видит грехи. И стреляет лазером из зрачка. Не моргай — можешь выжечь себе мозг.</div>
+                        <button class="buy-button" onclick="addToCart('Глаз Дьявола Mk.III', 3200)">Купить</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">Сердце Теней</div>
+                        <div class="product-info">Цена: 9000$</div>
+                        <div class="product-info">Место установки: Грудная клетка</div>
+                        <div class="product-info">ПЧ: 3d6</div>
+                        <div class="product-info">Сложность установки: Госпиталь</div>
+                        <div class="product-info">Размер: 5 слота</div>
+                        <div class="product-info">Улучшения: +3 СОПРОТИВЛЕНИЕ ПЫТ НАР, Иммунитет к ядам, Регенерация 1 HP/час</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: КиберСердце, Андреналиновый Бустер</div>
+                        <div class="product-desc">Это не сердце — это демон в каркасе из титана. Бьётся в обратную сторону. Любишь — значит, уже его.</div>
+                        <button class="buy-button">НЕДОСТУПНО</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">Голос Ада</div>
+                        <div class="product-info">Цена: 9999$</div>
+                        <div class="product-info">Место установки: Горло</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">Сложность установки: Рипер</div>
+                        <div class="product-info">Размер: 3 слота</div>
+                        <div class="product-info">Улучшения: +2 ХАР,</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Связки</div>
+                        <div class="product-desc">Твой голос теперь звучит, как у существа из преисподней. Даже ты сам боишься, когда говоришь.</div>
+                        <button class="buy-button" onclick="addToCart('Голос Ада', 9999)">Купить</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">Ноги Смерти</div>
+                        <div class="product-info">Цена: 8000$</div>
+                        <div class="product-info">Место установки: Ноги</div>
+                        <div class="product-info">ПЧ: 2d6</div>
+                        <div class="product-info">Сложность установки: Рипер++</div>
+                        <div class="product-info">Размер: 2 слота</div>
+                        <div class="product-info">Улучшения: +1 АТЛ, способность пинать двери (не крепкий металл) — они летят в щепки</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: КиберНоги, Искусств Мышц и кости</div>
+                        <div class="product-desc">Эти ноги могут раздробить позвоночник одним пинком. И да, ты уже начал ходить по людям во сне.</div>
+                        <button class="buy-button" onclick="addToCart('Ноги Смерти', 8000)">Купить</button>
+                    </div>
+                </div>
+            <div class="subsection">
+                <h3 class="subsection-title">Боевые Импланты</h3>
+                <div class="subsection-grid">
+                    <!-- ТОВАРЫ -->
+                    <!-- === ИМПЛАНТ: РУКИ ГОРИЛЛЫ === -->
+                    <div class="product-card">
+                        <div class="product-name">РУКИ ГОРИЛЛЫ</div>
+                        <div class="product-info">Цена: 5000$</div>
+                        <div class="product-info">ПЧ: 2d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Руки</div>
+                        <div class="product-info">Сложность установки: РИПЕР</div>
+                        <div class="product-info">Размер: 2 слота</div>
+                        <div class="product-info">Улучшения: 3d6 + 2D6 в ближнем бою</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Тело 12</div>
+                        <div class="product-desc">Твои руки — не руки. Это гидравлические молоты, покрытые титановой кожей. Ударишь — убьёшь. Обнимешь — разорвёшь. Ты не человек, ты машина. 2d6 получаешь если проходишь АТЛ>20 </div>
+                        <button class="buy-button" onclick="addToCart('Руки Гориллы', 5000)">Заказать</button>
+                    </div>
+
+                    <!-- === ИМПЛАНТ: ТЕРМАЛЬНЫЕ КОГТИ === -->
+                    <div class="product-card">
+                        <div class="product-name">ТЕРМАЛЬНЫЕ КОГТИ</div>
+                        <div class="product-info">Цена: 6000$</div>
+                        <div class="product-info">ПЧ: 2d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Руки</div>
+                        <div class="product-info">Сложность установки: РИПЕР</div>
+                        <div class="product-info">Размер: 2 слота</div>
+                        <div class="product-info">Урон: 3D6 + 1D6 термального урона</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: КиберРука</div>
+                        <div class="product-desc">Когти, которые плавят плоть при каждом касании. Ты не просто режешь — ты сжигаешь.</div>
+                        <button class="buy-button" onclick="addToCart('Термальные Когти', 6000)">Заказать</button>
+                    </div>
+
+                    <!-- === ИМПЛАНТ: НЕЙРО-КОГТИ === -->
+                    <div class="product-card">
+                        <div class="product-name">НЕЙРО-КОГТИ</div>
+                        <div class="product-info">Цена: 5500$</div>
+                        <div class="product-info">ПЧ: 2d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Руки</div>
+                        <div class="product-info">Сложность установки: РИПЕР</div>
+                        <div class="product-info">Размер: 2 слота</div>
+                        <div class="product-info">Улучшения: 2d6 (+ 3D6) </div>
+                        <div class="product-info">ТРЕБОВАНИЯ: КиберРука</div>
+                        <div class="product-desc">Тонкие, как волос, острые, как мысль о мести. Пронзают даже броню и душу. При атаке Бросок проверки РЕА сл 13 то +3d6</div>
+                        <button class="buy-button" onclick="addToCart('Нейро-Когти', 5500)">Заказать</button>
+                    </div>
+
+                    <!-- === ИМПЛАНТ: КРОВЬ НА ЛЕЗВИИ === -->
+                    <div class="product-card">
+                        <div class="product-name">КРОВЬ НА ЛЕЗВИИ</div>
+                        <div class="product-info">Цена: 4000$</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Нервная система</div>
+                        <div class="product-info">Сложность установки: РИПЕР</div>
+                        <div class="product-info">Размер: 3 слота</div>
+                        <div class="product-info">Улучшения: +2D6 к урону (если истекает кровью)</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: НейроЛинк, Искусственное сердце</div>
+                        <div class="product-desc">Чем больше крови — тем сильнее ты. Ты не человек. Ты хищник в обёртке из мяса и стали. После установки: -1 Уход за Собой</div>
+                        <button class="buy-button" onclick="addToCart('Кровь на лезвии', 4000)">Заказать</button>
+                    </div>
+
+                    <!-- === ИМПЛАНТ: КИБЕР-НОЖИ === -->
+                    <div class="product-card">
+                        <div class="product-name">КИБЕР-НОЖИ</div>
+                        <div class="product-info">Цена: 2500$</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Руки</div>
+                        <div class="product-info">Сложность установки: РИПЕР</div>
+                        <div class="product-info">Размер: 1 слота</div>
+                        <div class="product-info">Улучшения: 2D6 </div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Тело 8</div>
+                        <div class="product-desc">Встроенные ножи, вросшие в кости. Они не просто режут плоть — они сносят кости. После установки: -1 к Скрытности в перчатках</div>
+                        <button class="buy-button" onclick="addToCart('Кибер-Ножи', 2500)">Заказать</button>
+                    </div>
+
+                    <!-- === ИМПЛАНТ: ТУРБО-РЕФЛЕКСЫ === -->
+                    <div class="product-card">
+                        <div class="product-name">ТУРБО-РЕФЛЕКСЫ</div>
+                        <div class="product-info">Цена: 4500$</div>
+                        <div class="product-info">ПЧ: 2d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Нервная система</div>
+                        <div class="product-info">Сложность установки: РИПЕР</div>
+                        <div class="product-info">Размер: 2 слота</div>
+                        <div class="product-info">Улучшения: +1D6 к Уклонению (если не двигался в предыдущем раунде)</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Нейролинк 2.0</div>
+                        <div class="product-desc">Ты реагируешь, когда никто не двигается. Ты всегда на шаг впереди. Но после 2 активаций за сцену: -1 к следующему броску. Ты начинаешь терять контроль.</div>
+                        <button class="buy-button" onclick="addToCart('Турбо-Рефлексы', 4500)">Заказать</button>
+                    </div>
+
+                    <!-- === ИМПЛАНТ: ТУРБО-ПРИЦЕЛ === -->
+                    <div class="product-card">
+                        <div class="product-name">ТУРБО-ПРИЦЕЛ</div>
+                        <div class="product-info">Цена: 5000$</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">ТИП: Улучшение</div>
+                        <div class="product-info">Место установки: Глаза</div>
+                        <div class="product-info">Сложность установки: ТЦ</div>
+                        <div class="product-info">Размер: 1 слота ПАРНЫЕ </div>
+                        <div class="product-info">Улучшения: +1D6 к урону в голову</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: ИНТ 9, Киберглаз</div>
+                        <div class="product-desc">Ты видишь, где боль будет сильнее. Ты не стреляешь — ты нажимаешь на слабое место. Если цель скрыта — -2 к точности.</div>
+                        <button class="buy-button" onclick="addToCart('Турбо-Прицел', 5000)">Заказать</button>
+                    </div>
+
+                    <!-- === ИМПЛАНТ: НЕЙРО-СТИМУЛЯТОР === -->
+                    <div class="product-card">
+                        <div class="product-name">НЕЙРО-СТИМУЛЯТОР</div>
+                        <div class="product-info">Цена: 3500$</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Нервная система</div>
+                        <div class="product-info">Сложность установки: Госпиталь</div>
+                        <div class="product-info">Размер: 1 слота</div>
+                        <div class="product-info">Улучшения: +1D6 к урону в первом раунде</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: РЕФ 9</div>
+                        <div class="product-desc">Ты не думаешь — ты пиздишь. После 2 активаций: -1 к следующему броску. Ты начинаешь перегреваться.</div>
+                        <button class="buy-button" onclick="addToCart('Нейро-Стимулятор', 3500)">Заказать</button>
+                    </div>
+
+                    <!-- === ИМПЛАНТ: КОСТЯНЫЕ ПЛАСТИНЫ === -->
+                    <div class="product-card">
+                        <div class="product-name">КОСТЯНЫЕ ПЛАСТИНЫ</div>
+                        <div class="product-info">Цена: 8000$</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Кожа</div>
+                        <div class="product-info">Сложность установки: Госпиталь</div>
+                        <div class="product-info">Улучшения: +1D3 к Уклонению или Борьбе в ЗАЩИТЕ</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Тело 9</div>
+                        <div class="product-desc">Тонкие керамические пластины под кожей, которые слегка снижают урон от ближнего боя. В темноте -1 к Восприятию.</div>
+                        <button class="buy-button" onclick="addToCart('Костяные Пластины', 8000)">Заказать</button>
+                    </div>
+
+                    <!-- === ИМПЛАНТ: НЕЙРО-УСИЛИТЕЛЬ ВЫСТРЕЛА === -->
+                    <div class="product-card">
+                        <div class="product-name">НЕЙРО-УСИЛИТЕЛЬ ВЫСТРЕЛА</div>
+                        <div class="product-info">Цена: 4000$</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Нервная система</div>
+                        <div class="product-info">Сложность установки: ТЦ</div>
+                        <div class="product-info">Размер: 2 слота</div>
+                        <div class="product-info">Улучшения: +1D6 (попадание) к первому выстрелу в бою</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Рефлексы 10</div>
+                        <div class="product-desc">Первый выстрел — всегда в цель. Ты не стреляешь — ты убиваешь с одного выстрела.</div>
+                        <button class="buy-button" onclick="addToCart('Нейро-усилитель выстрела', 4000)">Заказать</button>
+                    </div>
+
+                    <!-- === ИМПЛАНТ: КОСТЯНЫЕ ВОЛОКНА === -->
+                    <div class="product-card">
+                        <div class="product-name">КОСТЯНЫЕ ВОЛОКНА</div>
+                        <div class="product-info">Цена: 3200$</div>
+                        <div class="product-info">ПЧ: 1d3</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Мышцы</div>
+                        <div class="product-info">Сложность установки: Госпиталь</div>
+                        <div class="product-info">Размер: 1 слота</div>
+                        <div class="product-info">Улучшения: +1 к Атлетике</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Тело 10</div>
+                        <div class="product-desc">Усиленные мышцы, вросшие в кости. Ты прыгаешь выше, бежишь быстрее.</div>
+                        <button class="buy-button">НЕДОСТУПНО</button>
+                    </div>
+                    <!-- === ИМПЛАНТ: БЛОК ПАМЯТИ СМЕРТИ === -->
+                    <div class="product-card">
+                        <div class="product-name">БЛОК ПАМЯТИ СМЕРТИ</div>
+                        <div class="product-info">Цена: 6000$</div>
+                        <div class="product-info">ПЧ: 2d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Мозг</div>
+                        <div class="product-info">Сложность установки: РИПЕР</div>
+                        <div class="product-info">Размер: 3 слота</div>
+                        <div class="product-info">Улучшения: +2D6 к урону в первом раунде</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Тело 12, Нейролинк 3.0, Берсерк</div>
+                        <div class="product-desc">Ты не боишься. Ты не чувствуешь боли. Ты просто убиваешь. После боя: проверка СКВ 14 или -10 к СОЦ НАВЫК до конца сцены. Ты слишком страшен для людей.</div>
+                        <button class="buy-button" onclick="addToCart('Блок Памяти Смерти', 6000)">НА ЗАКАЗ</button>
+                    </div>
+
+                    <!-- === ИМПЛАНТ: СИЛА-9000 === -->
+                    <div class="product-card">
+                        <div class="product-name">СИЛА-9000</div>
+                        <div class="product-info">Цена: 15000$</div>
+                        <div class="product-info">ПЧ: 2d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Руки</div>
+                        <div class="product-info">Сложность установки: РИПЕР</div>
+                        <div class="product-info">Размер: 3 слота</div>
+                        <div class="product-info">Улучшения: +2D6 к урону ближнего боя</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Тело 12</div>
+                        <div class="product-desc">Ты не просто бьёшь — ты **разносишь**. Но после 3 ударов: -1 к каждому последующему. Ты начинаешь терять контроль над руками.</div>
+                        <button class="buy-button">НЕДОСТУПНО</button>
+                    </div>
+
+                    <!-- === ИМПЛАНТ: БЛОК НЕЙРО-АДРЕНАЛИНА === -->
+                    <div class="product-card">
+                        <div class="product-name">БЛОК НЕЙРО-АДРЕНАЛИНА</div>
+                        <div class="product-info">Цена: 3500$</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Нервная Система</div>
+                        <div class="product-info">Сложность установки: РИПЕР</div>
+                        <div class="product-info">Размер: 3 слота</div>
+                        <div class="product-info">Улучшения: +1 к Инициативе</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Воля 8</div>
+                        <div class="product-desc">Ты первый в бою. Ты первый в аду.</div>
+                        <button class="buy-button" onclick="addToCart('Блок Нейро-Адреналина', 3500)">Заказать</button>
+                    </div>
+                </div>
+            </div>
+            <div class="subsection">
+                <h3 class="subsection-title">Лечебные Импланты (СПОНСОР TRAUMA TEAM)</h3>
+                <div class="subsection-grid">
+                    <!-- ТОВАРЫ -->
+                    <div class="product-card">
+                        <div class="product-name">Второе Сердце "Phoenix Core"</div>
+                        <div class="product-info">Цена: 19000$</div>
+                        <div class="product-info">ПЧ: 2d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Грудная клетка</div>
+                        <div class="product-info">Сложность установки: Хирург</div>
+                        <div class="product-info">Размер: 4 слотов</div>
+                        <div class="product-info">Улучшения: При смерти — воскрешает с 30 HP РАБОТАЕТ ОДИН РАЗ СУКА ТЫ БУДЕШЬ ЖИТЬ ТОЛЬКО ДЕНЬ СРОЧНО ЛОЖИСЬ В ГОСПИТАЛЬ И ПОКУПАЙ РЕГЕНЕРИРОВАННОЕ С ТВОИХ КЛЕТОК СЕРДЦЕ</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: ЖИВОЕ Сердце, ЛВК 7+</div>
+                        <div class="product-desc">Умер? Не вопрос. Это сердце бьётся даже когда ты уже списан. Как твой долг перед МилиТехом.</div>
+                        <button class="buy-button" onclick="addToCart('Второе Сердце Phoenix Core', 19000)">Заказать</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">DermalRepair 3000</div>
+                        <div class="product-info">Цена: 9990$</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Тело</div>
+                        <div class="product-info">Сложность установки: РИПЕР+</div>
+                        <div class="product-info">Размер: 1 слота</div>
+                        <div class="product-info">Улучшения: Восстанавливает 1 HP/час ДО 30 HP</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: REALSKINпо всему телу</div>
+                        <div class="product-desc">Твое тело теперь лечится само. Как у ящерицы, только медленнее и с запахом гари.</div>
+                        <button class="buy-button" onclick="addToCart('DermalRepair 3000', 9990)">Заказать</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">Нано-аптечка "Doc-in-a-Box"</div>
+                        <div class="product-info">Цена: 6200$</div>
+                        <div class="product-info">ПЧ: 2d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Брюшная полость</div>
+                        <div class="product-info">Сложность установки: РИПЕР++</div>
+                        <div class="product-info">Размер: 4 слота</div>
+                        <div class="product-info">Улучшения: 1 раз восстановление 3d6 HP ПОСЛЕ ЭТОГО НУЖНО ЯВИТСЯ В TRAUMA TEAM И ПРИОБРЕСТИ ЖИДКОСТНОЕ НАПОЛНЕНИЕ ДЛЯ ИМПЛАНТА (4000)</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: NeuralLink, Воля 6+</div>
+                        <div class="product-desc">Внутри тебя живёт доктор. Он пьяный, но колет точно в вену.</div>
+                        <button class="buy-button" onclick="addToCart('Нано-аптечка Doc-in-a-Box', 6200)">Заказать</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">Лёгкие-фильтр "Чистый Воздух"</div>
+                        <div class="product-info">Цена: 3000$</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Грудная клетка</div>
+                        <div class="product-info">Сложность установки: РИПЕР</div>
+                        <div class="product-info">Размер: 1 слота</div>
+                        <div class="product-info">Улучшения: Иммунитет к ядам (ВДЫХАТЕЛЬНЫМ), дыму, смогу и плохим решениям</div>
+                        <div class="product-info">ТРЕБОВАНИЯ:НЕТ</div>
+                        <div class="product-desc">Теперь ты можешь дышать в канализации, химзаводе или на свидании с мамой своей бывшей.</div>
+                        <button class="buy-button" onclick="addToCart('Лёгкие-фильтр Чистый Воздух', 3000)">Заказать</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">Печень-переработчик</div>
+                        <div class="product-info">Цена: 2200$</div>
+                        <div class="product-info">ПЧ: 1d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Брюшная полость</div>
+                        <div class="product-info">Сложность установки: РИПЕР</div>
+                        <div class="product-info">Размер: 2 слота</div>
+                        <div class="product-info">Улучшения: Иммунитет к алкоголю, ядам, печёночной недостаточности</div>
+                        <div class="product-info">ТРЕБОВАНИЯ:ТЕЛО 4</div>
+                        <div class="product-desc">Теперь ты можешь пить антифриз и жить. А печень твоего врага взорвётся от одного запаха водки.</div>
+                        <button class="buy-button" onclick="addToCart('Печень-переработчик', 2200)">Заказать</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-name">Спинальный Реаниматор</div>
+                        <div class="product-info">Цена: 9500$</div>
+                        <div class="product-info">ПЧ: 3d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Позвоночник</div>
+                        <div class="product-info">Сложность установки: Хирург (с допуском)</div>
+                        <div class="product-info">Размер: 4 слота</div>
+                        <div class="product-info">Улучшения: При падении в 0 HP — остаёшься при 1 HP (раз в сутки)</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: ИССК КОСТИ И МЫШЦ, Воля 9+</div>
+                        <div class="product-desc">Твой позвоночник знает, что ты ещё не закончил материться. Так что просто... не умирай. Ну, почти.</div>
+                        <button class="buy-button" onclick="addToCart('Спинальный Реаниматор', 9500)">Заказать</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">Система "Живи, Сука!"</div>
+                        <div class="product-info">Цена: 15000$</div>
+                        <div class="product-info">ПЧ: 3d6</div>
+                        <div class="product-info">ТИП: Имплант</div>
+                        <div class="product-info">Место установки: Все системы тела</div>
+                        <div class="product-info">Сложность установки: Чёрный Хирург / Лаборатория</div>
+                        <div class="product-info">Размер: 6 слотов</div>
+                        <div class="product-info">Улучшения: Восстанавливает 2 HP/час, +1 к спасброскам смерти</div>
+                        <div class="product-info">ТРЕБОВАНИЯ: Все основные органы — кибернетические, Воля 10</div>
+                        <div class="product-desc">Ты больше не человек. Ты боль, провода и упрямство. И ты просто отказываешься умирать.</div>
+                        <button class="buy-button" onclick="addToCart('Система Живи, Сука!', 15000)">Заказать</button>
+                    </div>
+                </div>
+            </div>
+            <div class="subsection">
+                <h3 class="subsection-title">Боевые Импланты</h3>
+                <div class="subsection-grid">
+                    <!-- ТОВАРЫ -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === УЛУЧШЕНИЯ НА ОРУЖИЕ === -->
+    <div id="weapon-upgrades" class="product-section">
+        <h2 class="section-title">Улучшения на Оружие</h2>
+        <div class="product-grid"></div>
+             <div class="subsection">
+                <h3 class="subsection-title">Улучшения для Винтовок</h3>
+                <div class="subsection-grid">
+                    <!-- ТОВАРЫ -->
+                     <!-- === МОД: Суперприцел X-7 === -->
+                    <div class="product-card">
+                        <div class="product-name">Суперприцел X-7</div>
+                        <div class="product-info">Цена: 2200$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 1</div>
+                        <div class="product-info">Что добавляет: +1D6 к урону при стрельбе в голову</div>
+                        <div class="product-desc">Разработан Arasaka. Используется в скрытных операциях. Если ты ведёшь цель — ты попадаешь(Цель была видимой минимум 1 раунд подряд). Если не ведёшь — ты уже мёртв.</div>
+                        <button class="buy-button" onclick="addToCart('Суперприцел X-7', 2200)">Купить</button>
+                    </div>
+
+                    <!-- === МОД: Система охлаждения 'Arasaka' === -->
+                    <div class="product-card">
+                        <div class="product-name">Система охлаждения 'Arasaka'</div>
+                        <div class="product-info">Цена: 1500$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 3</div>
+                        <div class="product-info">Что добавляет: +1 к СКА, можно стрелять 3 раунда без перегрева</div>
+                        <div class="product-desc">Создан для теневых снайперов. Ты не пахнешь потом — ты пахнешь смертью. Подходит только для импортных винтовок(Arasaka, KangTao,RipperDoc).</div>
+                        <button class="buy-button" onclick="addToCart('Система охлаждения Arasaka', 1500)">Купить</button>
+                    </div>
+
+                    <!-- === МОД: Усиленный ствол 'Militech' === -->
+                    <div class="product-card">
+                        <div class="product-name">Усиленный ствол 'Militech'</div>
+                        <div class="product-info">Цена: 1000$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 2</div>
+                        <div class="product-info">Что добавляет: +1D6 к урону</div>
+                        <div class="product-desc">Сделан на заводах Militech. Стреляет, как будто знаешь, что ты прав. Не совместим с кустарными винтовками(Совместим только с MiliTech). Ты не просто стреляешь — ты **выводишь из строя**.</div>
+                        <button class="buy-button" onclick="addToCart('Усиленный ствол Militech', 1000)">Купить</button>
+                    </div>
+
+                    <!-- === МОД: Подавитель тепла 'Arasaka' === -->
+                    <div class="product-card">
+                        <div class="product-name">Подавитель тепла 'Arasaka'</div>
+                        <div class="product-info">Цена: 2000$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 2</div>
+                        <div class="product-info">Что добавляет: +2 к Скрытности при стрельбе, Блокировка работы Тепловизора</div>
+                        <div class="product-desc">Используется только в тенях(Подробности у ГМ). Позволяет скрыться даже от термальных сканеров. Ты не стреляешь — ты **исчезаешь**.</div>
+                        <button class="buy-button" onclick="addToCart('Подавитель тепла Arasaka', 2000)">Купить</button>
+                    </div>
+
+                    <!-- === МОД: Усиленный магазин 'Ripperdoc' === -->
+                    <div class="product-card">
+                        <div class="product-name">Усиленный магазин 'Ripperdoc'</div>
+                        <div class="product-info">Цена: 800$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 1</div>
+                        <div class="product-info">Что добавляет: +5 к вместимости магазина</div>
+                        <div class="product-desc">Сделан из обломков старых винтовок. Если он не взорвётся — ты будешь доволен. Если взорвётся — ты не будешь.</div>
+                        <button class="buy-button" onclick="addToCart('Усиленный магазин Ripperdoc', 800)">Купить</button>
+                    </div>
+
+                    <!-- === МОД: Стабилизатор плеча 'Neotek' === -->
+                    <div class="product-card">
+                        <div class="product-name">Стабилизатор плеча 'Neotek'</div>
+                        <div class="product-info">Цена: 1800$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 2</div>
+                        <div class="product-info">Что добавляет: +1 к точности при Стрельбе с плеча (Стрельба с плеча +1) </div>
+                        <div class="product-desc">Используется с нейроинтерфейсом(ТРЕБУЕТСЯ НЕЙРОЛИНК). Позволяет стрелять, как будто ты не дрожишь. Потому что ты уже не человек.</div>
+                        <button class="buy-button" onclick="addToCart('Стабилизатор плеча Neotek', 1800)">Купить</button>
+                    </div>
+
+                    <!-- === МОД: Быстрая перезарядка 'Militech' === -->
+                    <div class="product-card">
+                        <div class="product-name">Быстрая перезарядка 'Militech'</div>
+                        <div class="product-info">Цена: 900$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 1</div>
+                        <div class="product-info">Перезарядка Осуществляется без Действия</div>
+                        <div class="product-desc">Ты не ждёшь — ты действуешь. Это ускорит твои руки, но замедлит твою жизнь. Потому что ты будешь стрелять больше, чем думать. (Совместим только с MiliTech)</div>
+                        <button class="buy-button" onclick="addToCart('Быстрая перезарядка Militech', 900)">Купить</button>
+                    </div>
+
+                    <!-- === МОД: Подавитель отдачи 'Mikoshi' === -->
+                    <div class="product-card">
+                        <div class="product-name">Подавитель отдачи 'Mikoshi'</div>
+                        <div class="product-info">Цена: 1500$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 2</div>
+                        <div class="product-info">+1 к точности при автоматическом огне</div>
+                        <div class="product-desc">Создан для тех, кто стреляет, как будто знает, где будет враг. Ты не просто стреляешь — ты **не теряешь контроль**.</div>
+                        <button class="buy-button" onclick="addToCart('Подавитель отдачи Mikoshi', 1500)">Купить</button>
+                    </div>
+
+                    <!-- === МОД: Усиленный ствол 'Neotek' === -->
+                    <div class="product-card">
+                        <div class="product-name">Усиленный ствол 'Neotek'</div>
+                        <div class="product-info">Цена: 5500$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 2</div>
+                        <div class="product-info">Что добавляет: +1D6 к урону, +1 к СКА</div>
+                        <div class="product-desc">Ствол с усилением. Ты стреляешь, как будто знаешь, где броня слаба(Только SP>7). Если не знаешь — ты скоро узнаешь. После выстрела.</div>
+                        <button class="buy-button" onclick="addToCart('Усиленный ствол Neotek', 5500)">Купить</button>
+                    </div>
+
+                    <!-- === МОД: Термальный ствол 'Arasaka' === -->
+                    <div class="product-card">
+                        <div class="product-name">Термальный ствол 'Arasaka'</div>
+                        <div class="product-info">Цена: 2000$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 3</div>
+                        <div class="product-info">Что добавляет: +1D6 термального урона, +1 к СКА</div>
+                        <div class="product-desc">Ты не просто стреляешь — ты **сжигаешь**. Ствол плавит всё на своём пути. Не совместим с водными имплантами. Или кожей(ТОЛЬКО ДЛЯ БОРГ ИЛИ КИБЕРРУК БЕЗ ПОКРЫТИЯ REALSKIN)СОВМЕСТИМ ТОЛЬКО С ARASAKA.</div>
+                        <button class="buy-button" onclick="addToCart('Термальный ствол Arasaka', 2000)">Купить</button>
+                    </div>
+
+                    <!-- === МОД: Система подавления сигнала 'Neotek' === -->
+                    <div class="product-card">
+                        <div class="product-name">Система подавления сигнала 'Neotek'</div>
+                        <div class="product-info">Цена: 1700$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 2</div>
+                        <div class="product-info">Что добавляет: +3 к скрытности на следующий ход после выстрела, если ход закончен вне зоны видимости врага</div>
+                        <div class="product-desc">Ты не просто стреляешь — ты **исчезаешь**. Твой враг будет искать тебя, но найдёт только дым и труп. Ты не просто убийца — ты **тень**.</div>
+                        <button class="buy-button" onclick="addToCart('Система подавления Neotek', 1700)">Купить</button>
+                    </div>
+
+                    <!-- === МОД: Нейро-усилитель прицела === -->
+                    <div class="product-card">
+                        <div class="product-name">Нейро-усилитель прицела</div>
+                        <div class="product-info">Цена: 1400$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 1</div>
+                        <div class="product-info">+1 к точности при движении (Если перед выстрелом прошел 6М и более)</div>
+                        <div class="product-desc">Создан для тех, кто стреляет, когда бежит. Ты не целишься — ты **предсказываешь**. После 3 активаций за сцену: -1 к точности.</div>
+                        <button class="buy-button" onclick="addToCart('Нейро-усилитель прицела', 1400)">Купить</button>
+                    </div>
+
+                    <!-- === МОД: Усиленный затвор 'Ripperdoc' === -->
+                    <div class="product-card">
+                        <div class="product-name">Усиленный затвор 'Ripperdoc'</div>
+                        <div class="product-info">Цена: 700$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 1</div>
+                        <div class="product-info">Что добавляет:Перезарядка не требует действия</div>
+                        <div class="product-desc">Улучшает работу затвора. Не для слабонервных. Иногда взрывается( Крит неудача). Иногда — нет. Но ты уже не новичок, верно?</div>
+                        <button class="buy-button" onclick="addToCart('Усиленный затвор Ripperdoc', 700)">Купить</button>
+                    </div>
+
+                    <!-- === МОД: Магазин на 20 патронов === -->
+                    <div class="product-card">
+                        <div class="product-name">Магазин на 20 патронов</div>
+                        <div class="product-info">Цена: 1200$</div>
+                        <div class="product-info">ТИП: Мод</div>
+                        <div class="product-info">РАЗМЕР СЛОТА: 1</div>
+                        <div class="product-info">Что добавляет: +16 к вместимости магазина</div>
+                        <div class="product-desc">Больше патронов — меньше перезарядок. Но зато больше шанс, что ты просто перегреешь ствол(Бросок меньше 8 - Клин орудия на 1д4 раунда). Ты не стреляешь экономно — ты **стреляешь много**.</div>
+                        <button class="buy-button" onclick="addToCart('Магазин на 20 патронов', 1200)">Купить</button>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+
+    <!-- === УЛУЧШЕНИЯ НА ИМПЛАНТЫ === -->
+    <div id="implant-upgrades" class="product-section">
+        <h2 class="section-title">Улучшения на Импланты</h2>
+        <div class="product-grid"></div>
+            <!-- === УЛУЧШЕНИЕ: Горилла-Усилитель === -->
+            <div class="product-card">
+                <div class="product-name">Горилла-Усилитель</div>
+                <div class="product-info">Цена: 5200$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Руки Гориллы</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: НЕЙРОЛИНК 3.0</div>
+                <div class="product-info">ЧТО ДАЁТ: +1D6 к урону в ближнем бою</div>
+                <div class="product-desc">Ты не просто бьёшь — ты разносишь. Руки становятся ещё тяжелее. И ещё страшнее. Только для тех, кто не боится потерять руки. Или врага.</div>
+                <button class="buy-button">НЕДОСТУПНО</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Система отдачи === -->
+            <div class="product-card">
+                <div class="product-name">Система отдачи</div>
+                <div class="product-info">Цена: 4000$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Руки Гориллы</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: НЕЙРОЛИНК 3.0</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 к СКА при ближнем бою</div>
+                <div class="product-desc">Ты не просто бьёшь — ты отбрасываешь. Враг не успевает понять, что его откинуло. Потому что он уже на стене. Или мёртв.</div>
+                <button class="buy-button" onclick="addToCart('Система отдачи', 4000)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Модуль "Берсерк+" === -->
+            <div class="product-card">
+                <div class="product-name">Модуль "Берсерк+"</div>
+                <div class="product-info">Цена: 2000$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Берсерк</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Воля 8, Тело 8</div>
+                <div class="product-info">ЧТО ДАЁТ: +1D6 к урону при истекании крови</div>
+                <div class="product-desc">Ты не просто в ярости — ты в экстазе. Чем больше крови — тем сильнее ты. Но после боя: проверка ЭМП 14 или -2 к СОЦ НАВЫК( 6 часов). Ты слишком страшен для людей.</div>
+                <button class="buy-button" onclick="addToCart('Модуль Берсерк+', 2000)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Нейро-Турбо === -->
+            <div class="product-card">
+                <div class="product-name">Нейро-Турбо</div>
+                <div class="product-info">Цена: 2500$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Берсерк</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: НЕЙРОЛИНК, Человечность =10+</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 к СКА при истекании крови</div>
+                <div class="product-desc">Ты не просто яростен — ты не контролируешь себя. Ты не человек. Ты убийца на стероидах. Или на чём-то похуже.</div>
+                <button class="buy-button" onclick="addToCart('Нейро-Турбо', 2500)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: МоноУсилитель === -->
+            <div class="product-card">
+                <div class="product-name">МоноУсилитель</div>
+                <div class="product-info">Цена: 1600$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: МоноСтруна</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: НЕЙРОЛИНК 2.0</div>
+                <div class="product-info">ЧТО ДАЁТ: +1D6 к урону при скрытой атаке</div>
+                <div class="product-desc">Ты не просто режешь — ты режешь с ненавистью. Ты не слышишь, как враг кричит. Потому что ты уже не слышишь вообще ничего(-2 внимательность в бою).</div>
+                <button class="buy-button" onclick="addToCart('МоноУсилитель', 1600)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Система "Тихий клинок" === -->
+            <div class="product-card">
+                <div class="product-name">Система "Тихий клинок"</div>
+                <div class="product-info">Цена: 1400$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: МоноСтруна</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Нейроинтерфейс 2</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 к Скрытие/Раскрытие объекта</div>
+                <div class="product-desc">Ты не просто режешь — ты исчезаешь. Ты не человек. Ты нож в темноте. И ты знаешь, где больнее всего.</div>
+                <button class="buy-button" onclick="addToCart('Система Тихий клинок', 1400)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Модуль "Двойное Сердце" === -->
+            <div class="product-card">
+                <div class="product-name">Модуль "Двойное Сердце"</div>
+                <div class="product-info">Цена: 2000$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Второе Сердце</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Тело=10, Потеря человечности=10+</div>
+                <div class="product-info">ЧТО ДАЁТ: +4 HP за ход при активации сердца</div>
+                <div class="product-desc">Ты не умираешь от одной пули. Ты не падаешь от одной раны. Но ты чувствуешь, как твоя душа уходит. Потихоньку.</div>
+                <button class="buy-button" onclick="addToCart('Модуль Двойное Сердце', 2000)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Система "Долгий пульс" === -->
+            <div class="product-card">
+                <div class="product-name">Система "Долгий пульс"</div>
+                <div class="product-info">Цена: 1800$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Второе Сердце</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Тело 9, Потеря человечности 8+</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 проверке на СМЕРТЬ</div>
+                <div class="product-desc">Ты не умираешь. Ты пробуешь умереть. Иногда — не получается. Иногда — ты просто не хочешь. Потому что внутри пустота.</div>
+                <button class="buy-button" onclick="addToCart('Система Долгий пульс', 1800)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: СанДавистан-Мод === -->
+            <div class="product-card">
+                <div class="product-name">СанДавистан-Мод</div>
+                <div class="product-info">Цена: 6900$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: СанДавистан</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Воля 8</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 к СКА</div>
+                <div class="product-desc">Ты не теряешь голову в панике. Ты находишь кого-то другого, чтобы её потерять. Врага. Или того, кто рядом.</div>
+                <button class="buy-button" onclick="addToCart('СанДавистан-Мод', 6900)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: СанДавистан-Рефлексы === -->
+            <div class="product-card">
+                <div class="product-name">СанДавистан-Рефлексы</div>
+                <div class="product-info">Цена: 1400$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: СанДавистан</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: РЕА 8</div>
+                <div class="product-info">ЧТО ДАЁТ: +5 к Инициативе при стрессе (Тут больше про отыгрыш стрессовая обстановка даже для ЭМП=1 будет стрессовой) </div>
+                <div class="product-desc">Ты не думаешь — ты действуешь. Ты не боишься — ты всё равно стреляешь. Даже если ты уже мёртв. Или почти.</div>
+                <button class="buy-button" onclick="addToCart('СанДавистан-Рефлексы', 1400)">Купить</button>
+            </div>
+            <!-- === УЛУЧШЕНИЕ: Токсин-Сброс === -->
+            <div class="product-card">
+                <div class="product-name">Токсин-Сброс</div>
+                <div class="product-info">Цена: 1300$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Связыватель токсинов</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Тело 7</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 СОПРОТИВЛЕНИЕ ПЫТКАМ/НАРК</div>
+                <div class="product-desc">Ты не умрёшь от яда. Ты попробуешь его на вкус. Иногда — даже полюбишь. Иногда — это будет твоя смерть.</div>
+                <button class="buy-button" onclick="addToCart('Токсин-Сброс', 1300)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Токсин-Фильтр === -->
+            <div class="product-card">
+                <div class="product-name">Токсин-Фильтр</div>
+                <div class="product-info">Цена: 4000$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Связыватель токсинов</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Тело 10</div>
+                <div class="product-info">ЧТО ДАЁТ: +12 к СКВ при отравлении</div>
+                <div class="product-desc">Ты не просто выживаешь — ты наслаждаешься. Яд — твой друг. Или враг. Иногда — сложно понять. Особенно, когда ты уже не ты.(РАБОТАЕТ ТОЛЬКО В ПАРЕ С ТОКСИН СБРОС)</div>
+                <button class="buy-button" onclick="addToCart('Токсин-Фильтр', 40)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Баллистический ускоритель === -->
+            <div class="product-card">
+                <div class="product-name">Баллистический ускоритель</div>
+                <div class="product-info">Цена: 2000$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Баллистические сопроцессоры</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Интеллект 10</div>
+                <div class="product-info">ЧТО ДАЁТ: +1D6 к урону при Стрельбе с Плеча</div>
+                <div class="product-desc">Ты не просто стреляешь — ты вычисляешь. Где больнее. Где сильнее. Где всё кончается. Для врага.</div>
+                <button class="buy-button" onclick="addToCart('Баллистический ускоритель', 2000)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Баллистический прицел === -->
+            <div class="product-card">
+                <div class="product-name">Баллистический прицел</div>
+                <div class="product-info">Цена: 2200$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Баллистические сопроцессоры</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Интеллект 11</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 к пападанию (расстояние>15метров)</div>
+                <div class="product-desc">Ты не просто стреляешь — ты убиваешь на расстоянии. Ты не просто человек — ты убийца в мыслях. Иногда — в чужих.</div>
+                <button class="buy-button" onclick="addToCart('Баллистический прицел', 2200)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Кибер-Стабилизация === -->
+            <div class="product-card">
+                <div class="product-name">Кибер-Стабилизация</div>
+                <div class="product-info">Цена: 1800$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Киберруки</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Рефлексы 8</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 К броскам атаки если сначала было пройдено 8 Метров</div>
+                <div class="product-desc">Ты не целишься — ты двигаешься и стреляешь. Ты не боишься отдачи. Ты не чувствуешь её. Потому что ты не чувствуешь вообще ничего.</div>
+                <button class="buy-button" onclick="addToCart('Кибер-Стабилизация', 1800)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Кибер-Синхронизация === -->
+            <div class="product-card">
+                <div class="product-name">Кибер-Синхронизация</div>
+                <div class="product-info">Цена: 2000$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Киберруки</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Нейроинтерфейс 4</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 СКА для Оружие Ближнего Боя</div>
+                <div class="product-desc">Ты не просто стреляешь — ты стреляешь двумя руками. Ты не просто убиваешь — ты убиваешь быстрее. Иногда — даже себя.</div>
+                <button class="buy-button" onclick="addToCart('Кибер-Синхронизация', 2000)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Нейро-Стимулятор === -->
+            <div class="product-card">
+                <div class="product-name">Нейро-Стимулятор</div>
+                <div class="product-info">Цена: 5000$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Нервная система</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: НЕЙРОЛИНК 3.0 </div>
+                <div class="product-info">ЧТО ДАЁТ: +1 к СКА </div>
+                <div class="product-desc">Ты не думаешь — ты реагируешь. Ты не стреляешь — ты взрываешь. Ты не человек. Ты импульс в плоти.</div>
+                <button class="buy-button" onclick="addToCart('Нейро-Стимулятор', 5000)">Купить</button>
+            </div>
+            <!-- === УЛУЧШЕНИЕ: Система "Память Смерти" === -->
+            <div class="product-card">
+                <div class="product-name">Система "Память Смерти"</div>
+                <div class="product-info">Цена: 1800$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: НЕЙРОЛИНК </div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: ИНТ 9</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 уклонение</div>
+                <div class="product-desc">Ты не просто уворачиваешься — ты предсказываешь. Ты не просто жив — ты знаешь, когда умрёшь. И когда убьёшь.</div>
+                <button class="buy-button" onclick="addToCart('Система Память Смерти', 1800)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Нейро-Память === -->
+            <div class="product-card">
+                <div class="product-name">Нейро-Память</div>
+                <div class="product-info">Цена: 1600$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Премьер КиберГлаз Кироши</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Интеллект 8</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 к точности при повторной атаке</div>
+                <div class="product-desc">Ты не забываешь, где попал. Ты не забываешь, кого убил. И не забудешь, кем ты был.</div>
+                <button class="buy-button" onclick="addToCart('Нейро-Память', 1600)">Купить</button>
+            </div>
+            <!-- === УЛУЧШЕНИЕ: Нейро-Импульс === -->
+            <!-- === УЛУЧШЕНИЕ: Оптика "Видеть Смерть" === -->
+            <div class="product-card">
+                <div class="product-name">Оптика "Видеть Смерть"</div>
+                <div class="product-info">Цена: 8400$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Киберглаза (любое)</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Нейроинтерфейс 3</div>
+                <div class="product-info">ЧТО ДАЁТ: +1D6 к урону при прицельном выстреле в голову</div>
+                <div class="product-desc">Ты не просто видишь — ты предсказываешь. Ты не просто стреляешь — ты находишь слабое место. Даже если его нет.</div>
+                <button class="buy-button" onclick="addToCart('Оптика Видеть Смерть', 8400)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Оптика "Теплый приём" === -->
+            <div class="product-card">
+                <div class="product-name">Оптика "Теплый приём"</div>
+                <div class="product-info">Цена: 1400$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Киберглаза</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: НЕЙРОЛИНК 2.0</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 к обнаружению через ТЕПЛОВИЗОР</div>
+                <div class="product-desc">Ты видишь, где дышит враг. Где бьётся его сердце. Где он прячется. Но иногда ты видишь слишком много. И начинаешь сходить с ума.</div>
+                <button class="buy-button" onclick="addToCart('Оптика Теплый приём', 1400)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Оптика "Теневой взгляд" === -->
+            <div class="product-card">
+                <div class="product-name">Оптика "Теневой взгляд"</div>
+                <div class="product-info">Цена: 1600$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Киберглаза</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Нейроинтерфейс 3</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 к СКВ при скрытности</div>
+                <div class="product-desc">Ты не просто видишь — ты исчезаешь. Ты не просто убиваешь — ты убиваешь незаметно. Ты не человек. Ты тень в тенях.</div>
+                <button class="buy-button" onclick="addToCart('Оптика Теневой взгляд', 1600)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Оптика "Смерть в глазах" === -->
+            <div class="product-card">
+                <div class="product-name">Оптика "Смерть в глазах"</div>
+                <div class="product-info">Цена: 19990$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Киберглаза</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: ЭКСПЕРИМЕНТАЛЬНЫЙ НЕЙРОЛИНК</div>
+                <div class="product-info">ЧТО ДАЁТ: +5 к броски атаки</div>
+                <div class="product-desc">Ты не просто смотришь — ты ищешь, где больнее. Ты не просто стреляешь — ты нацеливаешься в душу. Если она у тебя осталась.</div>
+                <button class="buy-button">НЕДОСТУПНО</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Оптика "Видение ночи" === -->
+            <div class="product-card">
+                <div class="product-name">Оптика "Видение ночи"</div>
+                <div class="product-info">Цена: 1100$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Киберглаза</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 1</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Нейроинтерфейс 2</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 к СКВ в темноте</div>
+                <div class="product-desc">Ты не просто видишь — ты ощущаешь. Ты не боишься темноты. Потому что ты в ней родился. Или там умер.</div>
+                <button class="buy-button" onclick="addToCart('Оптика Видение ночи', 1100)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Оптика "Сканирование" === -->
+            <div class="product-card">
+                <div class="product-name">Оптика "Сканирование"</div>
+                <div class="product-info">Цена: 1500$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Киберглаза</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Нейроинтерфейс 3</div>
+                <div class="product-info">ЧТО ДАЁТ: +1 к точности при движении</div>
+                <div class="product-desc">Ты не просто стреляешь — ты двигаешься и стреляешь. Ты не просто видишь — ты понимаешь. Иногда — слишком много.</div>
+                <button class="buy-button" onclick="addToCart('Оптика Сканирование', 1500)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Подавитель тепла 'Arasaka' === -->
+            <div class="product-card">
+                <div class="product-name">Подавитель тепла 'Arasaka'</div>
+                <div class="product-info">Цена: 2000$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: НЕЙРОЛИНК 3.0</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Интеллект 9</div>
+                <div class="product-info">ЧТО ДАЁТ: +2 СКА если потрачено все уклонение за раунд</div>
+                <div class="product-desc">Ты не просто уворачиваешься — ты исчезаешь. Ты не просто жив — ты знаешь, где ты был. И где ты будешь. Потому что ты не человек.</div>
+                <button class="buy-button" onclick="addToCart('Подавитель тепла Arasaka', 2000)">Купить</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Нейро-Стимулятор === -->
+            <div class="product-card">
+                <div class="product-name">Нейро-Стимулятор</div>
+                <div class="product-info">Цена: 2000$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: НЕЙРОЛИНК</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: НЕЙРОЛИНК, ТЕЛО=5</div>
+                <div class="product-info">ЧТО ДАЁТ:Мгновенное восстановление 15 HP</div>
+                <div class="product-desc">Ты здоров, чумба</div>
+                <button class="buy-button" onclick="addToCart('Нейро-Стимулятор', 2000)">Купить</button>
+            </div>
+    <!-- === ЗАПРЕЩЕННЫЕ ТОВАРЫ === -->
+    <div id="forbidden" class="product-section">
+        <h2 class="section-title">Запрещено в Найт Сити</h2>
+        <div class="product-grid"></div>
+                    <!-- === УЛУЧШЕНИЕ: Ядро Тьмы 'Arasaka' === -->
+            <div class="product-card">
+                <div class="product-name">Ядро Тьмы 'Arasaka'</div>
+                <div class="product-info">Цена: 0$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: ЭКСПЕРИМЕНТАЛЬНЫЙ НЕЙРОЛИНК</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 3</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Человечность меньше 15</div>
+                <div class="product-info">ЧТО ДАЁТ: +3 к СКА, 2D6 к урону при стрельбе в голову</div>
+                <div class="product-desc">Создано в секретной лаборатории Арасака. Ты не просто стреляешь — ты выжигаешь душу. После использования: -1 к Харизме до конца сцены. Ты пахнешь смертью.</div>
+                <button class="buy-button">ЗАПРЕЩЕНО</button>
+            </div>
+            <!-- === УЛУЧШЕНИЕ: Модуль "Кровавый клинок" === -->
+            <div class="product-card">
+                <div class="product-name">Модуль "Кровавый клинок"</div>
+                <div class="product-info">Цена: 0$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: МоноСтруна</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Тело 12, человечность меньше 12</div>
+                <div class="product-info">ЧТО ДАЁТ: +4D6 к урону при первом ударе</div>
+                <div class="product-desc">Ты не просто режешь — ты разрываешь. Клинок покрыт нано-ферментами, которые усиливают кровопотерю. Враг истекает за 2 раунда. Как и ты, если перегреется.</div>
+                <button class="buy-button">ЗАПРЕЩЕНО</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Баллистический реактор 'Militech' === -->
+            <div class="product-card">
+                <div class="product-name">Баллистический реактор 'Militech'</div>
+                <div class="product-info">Цена: 0$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Баллистические сопроцессоры</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 4</div>
+                <div class="product-info">ТРЕБОВАНИЯ: РЕФ 10, ЭКСПЕРИМЕНТАЛЬНЫЙ НЕЙРОЛИНК</div>
+                <div class="product-info">ЧТО ДАЁТ: +3D6 к урону, +1 к СКА</div>
+                <div class="product-desc">Используется только в спецоперациях. После 2 выстрелов: проверка РЕФ 16 или -1 к следующему броску. Ты не контролируешь себя. Ты не хочешь.</div>
+                <button class="buy-button">ЗАПРЕЩЕНО</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Кибер-Глаз "Смертельный взгляд" === -->
+            <div class="product-card">
+                <div class="product-name">Кибер-Глаз "Смертельный взгляд"</div>
+                <div class="product-info">Цена: 0$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Киберглаза (не стоковые) </div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 3</div>
+                <div class="product-info">ТРЕБОВАНИЯ: НЕЙРОЛИНК 3.0</div>
+                <div class="product-info">ЧТО ДАЁТ: +3D6 к урону при выстреле в голову</div>
+                <div class="product-desc">Ты не просто видишь — ты метишь в душу. После каждого попадания: -1 к восприятию. Ты начинаешь видеть мёртвых. Иногда они отвечают.</div>
+                <button class="buy-button">ЗАПРЕЩЕНО</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Сердце Теней === -->
+            <div class="product-card">
+                <div class="product-name">Сердце Теней</div>
+                <div class="product-info">Цена: 0$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Второе Сердце</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 3</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Тело 12, Потеря человечности 14+</div>
+                <div class="product-info">ЧТО ДАЁТ: мгновенный реген до 30 хп после смертельного выстрела</div>
+                <div class="product-desc">Ты не умираешь. Ты просто засыпаешь. И просыпаешься… где-то. Иногда — не в своём теле. Иногда — не в своём времени. Не используй, если боишься потерять себя.</div>
+                <button class="buy-button">ЗАПРЕЩЕНО</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: Режим "Берсерк-Х" === -->
+            <div class="product-card">
+                <div class="product-name">Режим "Берсерк-Х"</div>
+                <div class="product-info">Цена: 0$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: Берсерк</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 3</div>
+                <div class="product-info">ТРЕБОВАНИЯ: Воля 9, человечность меньще 9</div>
+                <div class="product-info">ЧТО ДАЁТ: +2D6 к урону, +1 к СКА при истекании крови</div>
+                <div class="product-desc">Ты не просто яростен — ты не человек. После боя: проверка СКВ 16 или -2 к Харизме на 24 часа. Ты не помнишь, что сделал. Но другие помнят.</div>
+                <button class="buy-button">ЗАПРЕЩЕНО</button>
+            </div>
+
+            <!-- === УЛУЧШЕНИЕ: СанДавистан-Z === -->
+            <div class="product-card">
+                <div class="product-name">СанДавистан-Z</div>
+                <div class="product-info">Цена: 0$</div>
+                <div class="product-info">ТИП: Улучшение</div>
+                <div class="product-info">ДЛЯ ИМПЛАНТА: СанДавистан</div>
+                <div class="product-info">РАЗМЕР УЛУЧШЕНИЯ: 2</div>
+                <div class="product-info">ТРЕБОВАНИЯ: ВОЛЯ 10</div>
+                <div class="product-info">ЧТО ДАЁТ: +10 к ИНИЦИАТИВЕ</div>
+                <div class="product-desc">Ты не теряешь контроль. Ты передаёшь его кому-то другому. Голос в голове говорит: «Я справлюсь». Ты ему веришь. Это ошибка.</div>
+                <button class="buy-button">ЗАПРЕЩЕНО</button>
+            </div>
+                        <!-- === ВИНТОВКА: 'Arasaka' Ямато-9X "Тень Императора" === -->
+            <div class="product-card">
+                <div class="product-name">'Arasaka' Ямато-9X "Тень Императора"</div>
+                <div class="product-info">Цена: 52000$</div>
+                <div class="product-info">УРОН: 8D6+3</div>
+                <div class="product-info">СКА: 4</div>
+                <div class="product-info">РАЗМЕР МАГАЗИНА: 6</div>
+                <div class="product-info">СКРЫВАЕМОСТЬ: НЕЛЬЗЯ СКРЫТЬ</div>
+                <div class="product-info">Слотов улучшений: 8</div>
+                <div class="product-desc">Создана для личной охраны президента Арасаки. Изготовлена из сверхпрочного сплава, используемого в броне самураев XXI века. Последний выстрел этой винтовки попал в голову её владельца — Такумы Арасаки III. Он стрелял в зеркало. Думал, что это шпион. Это был он.</div>
+                <button class="buy-button" onclick="addToCart('Arasaka Ямато-9X', 52000)">ПРЕДЗАКАЗ</button>
+            </div>
+
+            <!-- === ВИНТОВКА: 'Militech' Widow-King "Последний Приговор" === -->
+            <div class="product-card">
+                <div class="product-name">'Militech' Widow-King "Последний Приговор"</div>
+                <div class="product-info">Цена: 48000$</div>
+                <div class="product-info">УРОН: 7D6+4</div>
+                <div class="product-info">СКА: 3</div>
+                <div class="product-info">РАЗМЕР МАГАЗИНА: 10</div>
+                <div class="product-info">СКРЫВАЕМОСТЬ: ТРУДНО СКРЫТЬ</div>
+                <div class="product-info">Слотов улучшений: 7</div>
+                <div class="product-desc">Использовалась в операции «Чёрный Рассвет» — зачистке верхушки Arasaka в 2077 году. Владелец, майор Келли Харпер, убил 12 человек за 47 секунд. На 48-й — его собственный прицел показал ему лицо жены. Он нажал на курок. Экран погас. Винтовка осталась.</div>
+                <button class="buy-button">ЗАПРЕЩЕНО</button>
+            </div>
+
+            <!-- === ВИНТОВКА: 'Neotek' Eclipse-0 "Пожиратель Света" === -->
+            <div class="product-card">
+                <div class="product-name">'Neotek' Eclipse-0 "Пожиратель Света"</div>
+                <div class="product-info">Цена: 60000$</div>
+                <div class="product-info">УРОН: 8D6</div>
+                <div class="product-info">СКА: 4</div>
+                <div class="product-info">РАЗМЕР МАГАЗИНА: 20</div>
+                <div class="product-info">СКРЫВАЕМОСТЬ: НЕЛЬЗЯ СКРЫТЬ</div>
+                <div class="product-info">Слотов улучшений: 9</div>
+                <div class="product-desc">Экспериментальный прототип, созданный из обломков ИИ «Eclipse», уничтоженного в 2077. Винтовка не просто стреляет — она предсказывает. Её владелица, хакер по кличке «Луна», использовала её, чтобы убить трёх рипперов одновременно. Потом услышала голос: «Ты следующая». Выстрелила себе в голову. Винтовка выжила. Голос — тоже.</div>
+                <button class="buy-button">ЗАПРЕЩЕНО</button>
+            </div>
+
+            <!-- === ВИНТОВКА: 'Takemura' Ronin-Z "Путь Самурая" === -->
+            <div class="product-card">
+                <div class="product-name">'Takemura' Ronin-Z "Путь Самурая"</div>
+                <div class="product-info">Цена: 45000$</div>
+                <div class="product-info">УРОН: 6D6+4</div>
+                <div class="product-info">СКА: 2</div>
+                <div class="product-info">РАЗМЕР МАГАЗИНА: 10</div>
+                <div class="product-info">СКРЫВАЕМОСТЬ: МОЖНО СКРЫТЬ</div>
+                <div class="product-info">Слотов улучшений: 7</div>
+                <div class="product-desc">Создана для одного человека — Кенджи Такумуры, последнего самурая корпорации. Он использовал её, чтобы уничтожить отдел внутренней безопасности Takemura. После этого он встал на колени, положил ствол под подбородок и прошептал: «Я служил хорошо». Выстрел разнёс его голову. Винтовка была найдена… заряженной. И готовой к бою.</div>
+                <button class="buy-button">ЗАПРЕЩЕНО</button>
+            </div>
+
+            <!-- === ВИНТОВКА: 'Mikoshi' Phantom-S "Тень в Дожде" === -->
+            <div class="product-card">
+                <div class="product-name">'Mikoshi' Phantom-S "Тень в Дожде"</div>
+                <div class="product-info">Цена: 100.000$</div>
+                <div class="product-info">УРОН: 7D6+3</div>
+                <div class="product-info">СКА: 4</div>
+                <div class="product-info">РАЗМЕР МАГАЗИНА: 40</div>
+                <div class="product-info">СКРЫВАЕМОСТЬ: ТРУДНО СКРЫТЬ</div>
+                <div class="product-info">Слотов улучшений: 8</div>
+                <div class="product-desc">Изготовлена из материала, который поглощает свет. Известна только по слухам. Её владелец — женщина без имени — убила генерального директора Arasaka во время парада. Стреляла с расстояния 1.2 км. Никто не видел выстрела. Только дым. Она исчезла. Через неделю её тело нашли в реке. Руки были отрезаны. Винтовка — нет. Она лежала рядом. Как будто ждала следующего хозяина.</div>
+                <button class="buy-button">ЗАПРЕЩЕНО</button>
+            </div>
+    </div>
+</div>
+
+<!-- === СКРИПТЫ === -->
+<script>
+    const cart = [];
+
+    function toggleCart() {
+        const popup = document.getElementById('cart-popup');
+        popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+        updateCartDisplay();
+    }
+
+    function addToCart(name, price) {
+        cart.push({ name, price });
+        updateCartDisplay();
+    }
+
+    function updateCartDisplay() {
+        const itemsDiv = document.getElementById('cart-items');
+        const totalDiv = document.getElementById('cart-total');
+        const countSpan = document.getElementById('cart-count');
+
+        itemsDiv.innerHTML = '';
+        let total = 0;
+
+        cart.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'cart-item';
+            itemDiv.textContent = `${item.name} — ${item.price}$`;
+            itemsDiv.appendChild(itemDiv);
+            total += item.price;
+        });
+
+        totalDiv.textContent = total;
+        countSpan.textContent = cart.length;
+    }
+
+    // Обновление времени
+    setInterval(() => {
+        const now = new Date();
+        document.getElementById('time').textContent = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }, 1000);
+
+    // Анимация появления карточек при скролле
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.style.opacity = 0;
+        card.style.transform = 'translateY(20px)';
+        observer.observe(card);
+    });
+</script>
+
+<script>
+    function filterAllProducts() {
+        const input = document.getElementById("searchInput");
+        const filter = input.value.toLowerCase();
+        const allProducts = document.querySelectorAll(".product-card");
+
+        allProducts.forEach(product => {
+            const name = product.querySelector(".product-name").textContent.toLowerCase();
+            const description = product.querySelector(".product-desc").textContent.toLowerCase();
+            const category = product.closest(".product-section").id; // ID секции
+
+            if (name.includes(filter) || description.includes(filter)) {
+                product.style.display = "block";
+                product.classList.add("highlight");
+                // Автоматически открываем секцию, если она скрыта (например, через display: none)
+                product.closest(".product-section").style.display = "block";
+            } else {
+                product.style.display = "none";
+                product.classList.remove("highlight");
+            }
+        });
+    }
+
+    // Плавный скролл к товару по клику
+    document.addEventListener("click", function(e) {
+        if (e.target.classList.contains("product-card")) {
+            e.target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    });
+</script>
+</body>
+</html>
+
+                    
